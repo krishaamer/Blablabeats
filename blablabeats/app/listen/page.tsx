@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import type RecordRTCType from "recordrtc";
 
 import { fetchAssemblyAIRealtimeToken } from "@/lib/api";
@@ -41,7 +40,7 @@ const startRecording = async () => {
 
     texts[res.audio_start] = res.text;
     const keys = Object.keys(texts);
-    keys.sort((a: any, b: any) => a - b);
+    keys.sort((a, b) => a - b);
     for (const key of keys) {
       if (texts[key]) {
         if (msg.split(" ").length > 6) {
@@ -90,9 +89,7 @@ const startRecording = async () => {
           const base64data = reader.result;
           if (socket) {
             socket.send(
-              JSON.stringify({
-                audio_data: (base64data as any).split("base64,")[1],
-              })
+              JSON.stringify({ audio_data: base64data.split("base64,")[1] })
             );
           }
         };
@@ -104,7 +101,10 @@ const startRecording = async () => {
   };
 };
 
-const stopRecording = () => {};
+const stopRecording = () => {
+  recorder.stopRecording(stopRecordingCallback);
+  console.log(recordedChunks);
+};
 
 // Stops recording and ends real-time session.
 const stopRecordingCallback = () => {
@@ -117,45 +117,37 @@ const stopRecordingCallback = () => {
 };
 
 const IndexPage = () => {
-  const [transcript, setTranscript] = useState("");
+  const [selectedPodcaster, setSelectedPodcaster] = useState(null);
 
-  const [isRecording, setIsRecording] = useState(false);
-
-  const startRecording = () => {
-    setIsRecording(true);
+  const handleChange = (selectedOption) => {
+    setSelectedPodcaster(selectedOption);
   };
 
-  const stopRecording = useCallback(() => {
-    setIsRecording(false);
-    recorder.stopRecording(stopRecordingCallback);
-
-    console.log("stop recording");
-    console.log(recordedChunks);
-    console.log(recordedChunks);
-  }, [recorder]);
-
   return (
-    <div className="max-w-lg mx-auto p-8 shadow-lg rounded-lg bg-white">
-      <h2 className="text-2xl font-semibold mb-4">Speech to Text</h2>
-      <div className="mb-4 border p-4 rounded">
-        {transcript || "Speak something and see the text here."}
-      </div>
-      <div className="flex space-x-4">
-        <button
-          onClick={startRecording}
-          className={`p-2 rounded-full ${
-            isRecording ? "bg-red-500" : "bg-green-500"
-          } text-white`}
-        >
-          {isRecording ? "Recording..." : "Start"}
-        </button>
-        <button
-          onClick={stopRecording}
-          className="p-2 rounded-full bg-gray-400 text-white"
-          disabled={!isRecording}
-        >
-          Stop
-        </button>
+    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <div className="flex flex-col w-full p-8 text-gray-800 bg-white shadow-lg rounded-2xl">
+        <div className="flex items-center justify-center">
+          <div className="p-3">
+            <div className="text-xl font-medium text-gray-700">
+              Select a Podcaster
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center justify-center mt-6">
+          <button
+            onClick={startRecording}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2"
+          >
+            Start Recording
+          </button>
+
+          <button
+            onClick={stopRecording}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2"
+          >
+            Stop Recording
+          </button>
+        </div>
       </div>
     </div>
   );
