@@ -28,5 +28,8 @@
     "typescript": "5.1.6",
     "websockets": "^0.2.0",
     "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/recordrtc": "^5.6.11"
   }
 }
