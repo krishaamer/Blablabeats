@@ -1,21 +1,21 @@
-import ky from "ky";
-import type { NextApiRequest, NextApiResponse } from "next";
+import ky from 'ky'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    console.log("token...");
+    console.log('token...')
     const token = await ky
-      .post("https://api.assemblyai.com/v2/realtime/token", {
+      .post('https://api.assemblyai.com/v2/realtime/token', {
         json: { expires_in: 3600 },
         headers: { authorization: process.env.ASSEMBLY_AI_API_KEY },
       })
-      .json();
+      .json()
 
-    return NextResponse.json(token);
+    return NextResponse.json(token)
   } catch (err) {
-    console.error("assembly ai token error", err);
-    return NextResponse.json(err);
+    console.error('assembly ai token error', err)
+    return NextResponse.json(err)
   }
 }
