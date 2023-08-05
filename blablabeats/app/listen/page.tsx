@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import type RecordRTCType from "recordrtc";
 
 import { fetchAssemblyAIRealtimeToken } from "@/lib/api";
@@ -104,13 +104,7 @@ const startRecording = async () => {
   };
 };
 
-const stopRecording = () => {
-  recorder.stopRecording(stopRecordingCallback);
-
-  console.log("stop recording");
-  console.log(recordedChunks);
-  console.log(recordedChunks);
-};
+const stopRecording = () => {};
 
 // Stops recording and ends real-time session.
 const stopRecordingCallback = () => {
@@ -123,11 +117,22 @@ const stopRecordingCallback = () => {
 };
 
 const IndexPage = () => {
-  const [selectedPodcaster, setSelectedPodcaster] = useState(null);
+  const [transcript, setTranscript] = useState("");
 
-  const handleChange = (selectedOption) => {
-    setSelectedPodcaster(selectedOption);
+  const [isRecording, setIsRecording] = useState(false);
+
+  const startRecording = () => {
+    setIsRecording(true);
   };
+
+  const stopRecording = useCallback(() => {
+    setIsRecording(false);
+    recorder.stopRecording(stopRecordingCallback);
+
+    console.log("stop recording");
+    console.log(recordedChunks);
+    console.log(recordedChunks);
+  }, [recorder]);
 
   return (
     <div className="max-w-lg mx-auto p-8 shadow-lg rounded-lg bg-white">
