@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.0.4",
     "@tailwindcss/typography": "^0.5.7",
     "@types/node": "20.4.8",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
+    "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
@@ -28,6 +30,8 @@
     "react-stately": "^3.17.0",
     "recordrtc": "^5.6.2",
     "rss-to-json": "^2.1.1",
+    "tailwind-merge": "^1.14.0",
+    "tailwindcss-animate": "^1.0.6",
     "typescript": "5.1.6",
     "websockets": "^0.2.0",
     "ws": "^8.13.0"
