@@ -1,6 +1,7 @@
 import ky from "ky";
 
 import * as config from "./config";
+import { debug } from "console";
 
 export async function fetchAssemblyAIRealtimeToken() {
   const url = `${config.apiBaseUrl}/api/token`;
