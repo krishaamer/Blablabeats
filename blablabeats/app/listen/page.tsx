@@ -94,7 +94,9 @@ const IndexPage = () => {
             const base64data = reader.result;
             if (socket) {
               socket.send(
-                JSON.stringify({ audio_data: base64data.split("base64,")[1] })
+                JSON.stringify({
+                  audio_data: (base64data as any).split("base64,")[1],
+                })
               );
             }
           };
@@ -113,8 +115,8 @@ const IndexPage = () => {
 
   // Stops recording and ends real-time session.
   const stopRecordingCallback = () => {
-    socket.send(JSON.stringify({ terminate_session: true }));
-    socket.close();
+    socket?.send(JSON.stringify({ terminate_session: true }));
+    socket?.close();
     socket = null;
 
     recorder.destroy();
