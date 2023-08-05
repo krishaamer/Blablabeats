@@ -1,0 +1,145 @@
+.homePage {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: var(--gap-h);
+  gap: var(--gap-2);
+}
+
+.body {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap);
+}
+
+.body div > input {
+  width: 100%;
+}
+
+.section {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 72px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-2);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.date {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.thumbnail {
+  align-self: center;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.title {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  font-size: 1.2em;
+}
+
+.video {
+  width: 0;
+  height: 0;
+}
+
+.actionButton {
+  display: inline-flex;
+}
+
+.actionIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: var(--gap-2);
+}
+
+@media (max-width: 800px) {
+  .actions {
+    justify-content: space-around;
+    gap: 0;
+  }
+}
+
+.recordButton {
+  align-self: center;
+  display: inline-flex;
+  padding: 12px;
+  background: #d0433b;
+  border-radius: 50%;
+}
+
+.recordButton:hover {
+  background: #a52822;
+}
+
+.recordButton:active {
+  background: #670c07;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.micIcon {
+  color: #fff;
+  width: 36px;
+  height: 36px;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 1s infinite;
+}
+
+.micIconStatic {
+  color: #fff;
+  width: 36px;
+  height: 36px;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
