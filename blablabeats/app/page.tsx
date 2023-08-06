@@ -61,12 +61,7 @@ export default function Home() {
   // capitalize the first letter of each word and remove dashes
   // for example "bass-drum-1" becomes "Bass Drum 1"
   const formatBeatName = useCallback((audio) => {
-    const splitted_audio = audio.split('/')
-    if (splitted_audio.length == 1) {
-      return audio
-    }
-
-    const name = splitted_audio.pop().split('.')[0]
+    const name = audio.split('/').pop().split('.')[0]
     const words = name.split('-')
     const formattedWords = words.map(
       (word) => word.charAt(0).toUpperCase() + word.slice(1)
