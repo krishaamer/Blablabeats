@@ -1,7 +1,7 @@
 'use client'
 
 import { fetchOpenAIChatCompletion } from '@/lib/api'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type RecordRTCType from 'recordrtc'
 let recorder
 let recordedChunks = []
@@ -13,11 +13,13 @@ let options = {
   audioBitsPerSecond: 128000,
   mimeType: 'audio/webm;codecs=pcm',
 }
+let animationFrameId
 
 const AudioListener = () => {
   const [transcript, setTranscript] = useState('')
   const canvasRef = useRef(null)
   const audioContextRef: any = useRef(null)
+  const streamRef: any = useRef(null)
   const analyserRef: any = useRef(null)
 
   const updateCanvasSize = () => {
@@ -28,67 +30,68 @@ const AudioListener = () => {
     }
   }
 
-  useEffect(() => {
+  const removeCanvas = () => {
+    if (canvasRef.current) {
+      canvasRef.current = null
+    }
+  }
+
+  const start = async () => {
     window.AudioContext =
       window.AudioContext || (window as any).webkitAudioContext
     audioContextRef.current = new AudioContext()
     analyserRef.current = audioContextRef.current.createAnalyser()
 
-    let animationFrameId
-    const start = async () => {
-      const canvas: any = canvasRef.current
-      const ctx = canvas.getContext('2d')
+    const canvas: any = canvasRef.current
+    const ctx = canvas.getContext('2d')
 
-      // Update the canvas size when the component mounts
-      updateCanvasSize()
+    // Update the canvas size when the component mounts
+    updateCanvasSize()
 
-      // Set up a resize event listener to update the canvas size when the window size changes
-      window.addEventListener('resize', updateCanvasSize)
+    // Set up a resize event listener to update the canvas size when the window size changes
+    window.addEventListener('resize', updateCanvasSize)
 
-      const drawVisualization = () => {
-        // Get frequency data
-        const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount)
-        analyserRef.current.getByteFrequencyData(dataArray)
+    const drawVisualization = () => {
+      // Get frequency data
+      const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount)
+      analyserRef.current.getByteFrequencyData(dataArray)
 
-        // Clear canvas
-        ctx.fillStyle = 'black'
-        ctx.fillRect(0, 0, canvas.width, canvas.height)
+      // Clear canvas
+      ctx.fillStyle = 'black'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-        // Draw frequency bars
-        const barWidth = (canvas.width / dataArray.length) * 2.5
-        let barHeight
-        let x = 0
-        for (let i = 0; i < dataArray.length; i++) {
-          barHeight = dataArray[i] / 2
-          ctx.fillStyle = `rgb(${barHeight + 200},50,50)`
-          ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight)
-          x += barWidth + 1
-        }
-
-        animationFrameId = requestAnimationFrame(drawVisualization)
+      // Draw frequency bars
+      const barWidth = (canvas.width / dataArray.length) * 2.5
+      let barHeight
+      let x = 0
+      for (let i = 0; i < dataArray.length; i++) {
+        barHeight = dataArray[i] / 2
+        ctx.fillStyle = `rgb(${barHeight + 200},50,50)`
+        ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight)
+        x += barWidth + 1
       }
 
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: false,
-      })
-
-      const source = audioContextRef.current.createMediaStreamSource(stream)
-      source.connect(analyserRef.current)
-
-      // Your existing code...
-
-      drawVisualization()
+      animationFrameId = requestAnimationFrame(drawVisualization)
     }
-    start()
 
-    return () => {
-      cancelAnimationFrame(animationFrameId)
-    }
-  }, [])
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: false,
+    })
+    streamRef.current = stream
 
-  const startRecording = async () => {
+    const source = audioContextRef.current.createMediaStreamSource(
+      streamRef.current
+    )
+    source.connect(analyserRef.current)
+
+    drawVisualization()
+  }
+
+  const startRecording = useCallback(async () => {
     console.log('start recording')
+
+    start()
 
     // Assembly AI audio requirments:
     // WAV PCM16
@@ -152,7 +155,6 @@ const AudioListener = () => {
         video: false,
       })
 
-      console.log(stream)
       const RecordRTC = (await import('recordrtc'))
         .default as typeof RecordRTCType
       recorder = new RecordRTC(stream, {
@@ -182,11 +184,14 @@ const AudioListener = () => {
 
       recorder.startRecording()
     }
-  }
+  }, [recorder])
 
   const stopRecording = () => {
     recorder?.stopRecording(stopRecordingCallback)
     console.log(recordedChunks)
+    canvasRef.current = null
+    cancelAnimationFrame(animationFrameId)
+    removeCanvas()
   }
 
   // Stops recording and ends real-time session.

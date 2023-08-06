@@ -70,8 +70,8 @@ const EditBeatForm = ({ beat, onUpdate }) => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
         <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
           <DialogTrigger>
-            <div className="relative z-10 rounded-md bg-white px-2 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-              <PencilIcon className="h-4 w-4" />
+            <div className="relative z-10 rounded-md bg-gray-800 px-2 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-600 hover:bg-gray-900">
+              <PencilIcon className="h-4 w-4 text-gray-400" />
             </div>
           </DialogTrigger>
           <DialogContent>
