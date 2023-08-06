@@ -152,8 +152,12 @@ const AudioListener = ({ onAudioPlay }) => {
         }
       }
 
+      // if the message is the same as the last final transcript, make it empty string
+      if(msg === lastThreeFinalTranscripts[0]) {
+        msg = ''
+      }
       const combinedTranscript = lastThreeFinalTranscripts.join(' ') + msg
-
+      
       if (
         res.message_type === 'FinalTranscript' &&
         msg != '' &&

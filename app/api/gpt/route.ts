@@ -18,7 +18,7 @@ export async function POST(req: Request | NextRequest) {
     // randomize the order of sounds
     sounds.sort(() => Math.random() - 0.5)
     const gptResponse = await openai.createChatCompletion({
-      model: 'gpt-3.5-turbo-0613',
+      model: 'gpt-4-0613',
       messages: [
         {
           role: 'user',

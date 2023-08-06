@@ -73,7 +73,7 @@ export default function Home() {
 
   const onAudioPlay = async (audio) => {
     setAudio(audio)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 3000))
     setAudio('')
   }
 
@@ -128,7 +128,7 @@ export default function Home() {
                 className={cn(
                   'group relative flex h-20 items-center space-x-3 rounded-lg border border-slate-500 bg-gray-900 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-blue-500 hover:bg-slate-800',
                   audio === beat.source &&
-                    'border-green-500 bg-green-800 hover:border-green-600'
+                    'border-pink-300 bg-pink-500 hover:border-blue-600'
                 )}
               >
                 <div className="min-w-0 flex-1">
