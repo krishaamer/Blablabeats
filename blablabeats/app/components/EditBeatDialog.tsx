@@ -55,7 +55,6 @@ const EditBeatForm = ({ beat, onUpdate }) => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values.prompt)
     const result = await generateMusicGen(values.prompt)
     if (localStorage.getItem('sounds')) {
       const data: any = localStorage.getItem('sounds')

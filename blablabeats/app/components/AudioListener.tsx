@@ -92,7 +92,6 @@ const AudioListener = () => {
   }
 
   const startRecording = useCallback(async () => {
-    console.log('start recording')
     setIsRecording(true)
 
     start()
