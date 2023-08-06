@@ -17,7 +17,7 @@ export async function POST(req: Request | NextRequest) {
         input: {
           model_version: 'melody',
           prompt: text,
-          duration: 2,
+          duration: 3,
         },
       }
     )

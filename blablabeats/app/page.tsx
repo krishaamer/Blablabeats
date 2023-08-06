@@ -28,6 +28,7 @@ export default function Home() {
       json.map((item) => {
         if (item.name === beat.name) {
           item.source = result
+          item.name = prompt
         }
         return item
       })
