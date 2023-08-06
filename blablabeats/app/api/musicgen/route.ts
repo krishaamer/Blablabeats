@@ -9,19 +9,22 @@ export async function POST(req: Request | NextRequest) {
     const replicate = new Replicate({
       auth: process.env.REPLICATE_API_TOKEN ?? '',
     })
-    const { text } = await req.json()
+    const input = await req.json()
+    const text = input.text
 
     const output = await replicate.run(
-      'pollinations/music-gen:9b8643c06debace10b9026f94dcb117f61dc1fee66558a09cde4cfbf51bcced6',
+      'facebookresearch/musicgen:7a76a8258b23fae65c5a22debb8841d1d7e816b75c2f24218cd2bd8573787906',
       {
         input: {
-          text: text,
+          model_version: 'melody',
+          prompt: text,
+          duration: 3,
         },
       }
     )
     return NextResponse.json(output)
   } catch (err) {
-    console.error('assembly ai token error', err)
+    console.error('musicgen error', err)
     return NextResponse.json(err)
   }
 }

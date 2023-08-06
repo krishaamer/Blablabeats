@@ -27,6 +27,7 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
 import LoadingAnimation from '../../components/LoadingAnimation'
+import { generateMusicGen } from '@/lib/api'
 
 const formSchema = z.object({
   prompt: z.string().min(4, {
@@ -53,9 +54,10 @@ const EditBeatForm = ({ beat }) => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
-    // await 2 seconds
-    await new Promise((r) => setTimeout(r, 2000))
+    console.log(values.prompt)
+    const result = await generateMusicGen(values.prompt)
+    console.log(result)
+    console.log('Alec can you put this in an audio tag, thanks!!')
     setIsOpen(false)
     toast.success('Successfully updated!')
     reset()
