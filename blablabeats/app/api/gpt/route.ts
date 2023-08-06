@@ -13,7 +13,8 @@ export async function POST(req: Request | NextRequest) {
   try {
     // sounds: names
     const { msg, sounds } = await req.json()
-
+    // add 'None' to sounds
+    sounds.push('None')
     const gptResponse = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo-0613',
       messages: [
@@ -35,7 +36,7 @@ export async function POST(req: Request | NextRequest) {
               sound_to_play: {
                 type: 'string',
                 description: 'one of the valid sounds to play',
-                enum: sounds+['None'],
+                enum: sounds,
               },
             },
           },
@@ -43,9 +44,15 @@ export async function POST(req: Request | NextRequest) {
         },
       ],
     })
-    return NextResponse.json(gptResponse.data.choices)
+    // make sure the choice was one of the valid sounds, if not, make it None
+    const choice = JSON.parse(gptResponse.data.choices[0].message.function_call.arguments).sound_to_play
+    if (!sounds.includes(choice)) {
+      return NextResponse.json('None')
+    }
+    console.log('gptResponse', choice)
+    return NextResponse.json(choice)
   } catch (err) {
     console.error('ERROR IN CHATGPT PIPELINE', err)
-    return NextResponse.json(err)
+    return NextResponse.json('None')
   }
 }
