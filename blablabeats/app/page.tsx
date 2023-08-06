@@ -4,6 +4,7 @@ import { useCallback } from 'react'
 import beatsList from '../data/audioList'
 import EditBeatForm from './components/EditBeatDialog'
 import AudioVisualizer from './components/AudioVisualizer'
+import AudioListener from './components/AudioListener'
 
 export default function Home() {
   const playSound = (audio) => {
@@ -33,6 +34,7 @@ export default function Home() {
         <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
           Welcome to BlaBlaBeats
         </div>
+        <AudioListener />
         <AudioVisualizer />
       </main>
 
