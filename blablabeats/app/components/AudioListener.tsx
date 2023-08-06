@@ -56,9 +56,8 @@ const AudioListener = () => {
       if (msg.split(' ').length > 2 && res.message_type === 'FinalTranscript') {
         const data: any = localStorage.getItem('sounds')
         const sounds = JSON.parse(data).map((sound) => sound.name)
-        console.log(sounds)
-        // const gptResponse = await fetchOpenAIChatCompletion(msg, sounds)
-        // console.log('gptResponse: ' + JSON.stringify(gptResponse))
+        const gptResponse = await fetchOpenAIChatCompletion(msg, sounds)
+        console.log('gptResponse: ' + JSON.stringify(gptResponse))
       }
       console.log('recorded message: ' + msg)
       setTranscript(msg)
