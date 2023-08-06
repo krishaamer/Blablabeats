@@ -278,8 +278,8 @@ const AudioListener = ({ onAudioPlay }) => {
         ) : (
           <div className="max-w-md text-center">
             BlaBlaBeats spices up your chats with perfectly-timed beats and
-            sounds. Just press {'"Start"'} and talk naturally — we'll mix in
-            audio that adds character to your conversations!
+            sounds. Just press {'"Start"'} and talk naturally — the AI will mix
+            in audio that adds character to your conversations!
           </div>
         )}
         <div className="relative z-10 mt-6 flex items-center justify-center">
