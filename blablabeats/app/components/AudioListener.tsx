@@ -10,7 +10,7 @@ let socket
 
 import { fetchAssemblyAIRealtimeToken } from '@/lib/api'
 import { Button } from '../../components/ui/button'
-import { StopCircle, StopCircleIcon } from 'lucide-react'
+import { MicIcon, PlayIcon, StopCircle, StopCircleIcon } from 'lucide-react'
 
 let options = {
   audioBitsPerSecond: 128000,
@@ -161,7 +161,7 @@ const AudioListener = () => {
         // if it's final, join this transcript with the last 3
         lastTranscript = combinedTranscript
         // combine the last 3 final transcripts + the current transcript
-        const data: any = localStorage.getItem('sounds')
+        const data: any = sessionStorage.getItem('sounds')
         const sounds = JSON.parse(data).map((sound) => sound.name)
         const soundToPlay = await fetchOpenAIChatCompletion(
           combinedTranscript,
@@ -272,7 +272,7 @@ const AudioListener = () => {
         <div className="relative z-10 mt-6 flex items-center justify-center">
           {!isRecording ? (
             <Button size={'lg'} variant={'secondary'} onClick={startRecording}>
-              Start Recording
+              <MicIcon className="mr-2 h-4 w-4" /> Start
             </Button>
           ) : (
             <Button size={'lg'} variant={'destructive'} onClick={stopRecording}>

@@ -21,8 +21,8 @@ export default function Home() {
   }
 
   const onUpdate = (prompt, beat, result) => {
-    if (localStorage.getItem('sounds')) {
-      const data: any = localStorage.getItem('sounds')
+    if (sessionStorage.getItem('sounds')) {
+      const data: any = sessionStorage.getItem('sounds')
       const json = JSON.parse(data)
 
       json.map((item) => {
@@ -31,18 +31,18 @@ export default function Home() {
         }
         return item
       })
-      localStorage.setItem('sounds', JSON.stringify(json))
+      sessionStorage.setItem('sounds', JSON.stringify(json))
       setSounds(json)
     }
   }
 
   useEffect(() => {
-    if (localStorage.getItem('sounds') === null) {
-      localStorage.setItem('sounds', JSON.stringify(beatsList))
+    if (sessionStorage.getItem('sounds') === null) {
+      sessionStorage.setItem('sounds', JSON.stringify(beatsList))
     }
 
-    if (localStorage.getItem('sounds')) {
-      const data: any = localStorage.getItem('sounds')
+    if (sessionStorage.getItem('sounds')) {
+      const data: any = sessionStorage.getItem('sounds')
       // deep compare the data
       if (JSON.stringify(sounds) !== data) {
         setSounds(JSON.parse(data))
@@ -51,9 +51,9 @@ export default function Home() {
   }, [sounds])
 
   useHotkeys('ctrl+k, cmd+k', () => {
-    localStorage.clear()
-    if (localStorage.getItem('sounds') === null) {
-      localStorage.setItem('sounds', JSON.stringify(beatsList))
+    sessionStorage.clear()
+    if (sessionStorage.getItem('sounds') === null) {
+      sessionStorage.setItem('sounds', JSON.stringify(beatsList))
     }
   })
 
@@ -70,7 +70,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="flex h-screen flex-col bg-gray-900 text-white">
+    <div className="flex h-screen flex-col overflow-hidden bg-gray-900 text-white">
       <header className="border-b border-b-gray-700 bg-gray-800 shadow-sm">
         <div className="mx-auto flex justify-between px-4 py-4 sm:px-6 lg:px-8">
           <h1 className="text-lg font-semibold leading-6 text-white">
@@ -86,14 +86,7 @@ export default function Home() {
         </div>
       </header>
       <div className="flex h-full flex-row">
-        <main
-          className="background-animate relative flex h-full w-3/5
-    flex-col
-    bg-gradient-to-r
-    from-pink-500
-    via-red-500
-    to-yellow-500"
-        >
+        <main className="background-animate relative flex h-full w-3/5 flex-col bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
           <div className="absolute inset-0 bg-black bg-opacity-80" />
           <AudioListener />
         </main>
