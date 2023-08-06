@@ -220,12 +220,15 @@ const AudioListener = () => {
   return (
     <div className="relative flex h-full flex-1 flex-col items-center justify-center">
       <div className="flex w-full flex-1 flex-col items-center justify-center">
-        <div className="min-h-80 text-white">{transcript}</div>
-        <div className="max-w-md text-center">
-          BlaBlaBeats adds character to your conversations. Simply press "Start"
-          and start speaking. BlaBlaBeats will listen to your conversation and
-          add the necessary beats to it.
-        </div>
+        {isRecording ? (
+          <div className="min-h-80 text-white">{transcript}</div>
+        ) : (
+          <div className="max-w-md text-center">
+            BlaBlaBeats adds character to your conversations. Simply press
+            "Start" and start speaking. BlaBlaBeats will listen to your
+            conversation and add the necessary beats to it.
+          </div>
+        )}
         <div className="mt-6 flex items-center justify-center">
           {!isRecording ? (
             <Button variant={'secondary'} onClick={startRecording}>
