@@ -21,8 +21,8 @@ export default function Home() {
   }
 
   const onUpdate = (prompt, beat, result) => {
-    if (localStorage.getItem('sounds')) {
-      const data: any = localStorage.getItem('sounds')
+    if (sessionStorage.getItem('sounds')) {
+      const data: any = sessionStorage.getItem('sounds')
       const json = JSON.parse(data)
 
       json.map((item) => {
@@ -32,18 +32,18 @@ export default function Home() {
         }
         return item
       })
-      localStorage.setItem('sounds', JSON.stringify(json))
+      sessionStorage.setItem('sounds', JSON.stringify(json))
       setSounds(json)
     }
   }
 
   useEffect(() => {
-    if (localStorage.getItem('sounds') === null) {
-      localStorage.setItem('sounds', JSON.stringify(beatsList))
+    if (sessionStorage.getItem('sounds') === null) {
+      sessionStorage.setItem('sounds', JSON.stringify(beatsList))
     }
 
-    if (localStorage.getItem('sounds')) {
-      const data: any = localStorage.getItem('sounds')
+    if (sessionStorage.getItem('sounds')) {
+      const data: any = sessionStorage.getItem('sounds')
       // deep compare the data
       if (JSON.stringify(sounds) !== data) {
         setSounds(JSON.parse(data))
@@ -52,9 +52,9 @@ export default function Home() {
   }, [sounds])
 
   useHotkeys('ctrl+k, cmd+k', () => {
-    localStorage.clear()
-    if (localStorage.getItem('sounds') === null) {
-      localStorage.setItem('sounds', JSON.stringify(beatsList))
+    sessionStorage.clear()
+    if (sessionStorage.getItem('sounds') === null) {
+      sessionStorage.setItem('sounds', JSON.stringify(beatsList))
     }
   })
 
@@ -71,8 +71,8 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="flex h-screen flex-col bg-gray-900 text-white">
-      <header className="border-b border-b-gray-700 bg-gray-800 shadow-sm">
+    <div className="flex h-screen flex-col overflow-hidden bg-gray-900 text-white">
+      <header className="h-[4rem] border-b border-b-gray-700 bg-gray-800 shadow-sm">
         <div className="mx-auto flex justify-between px-4 py-4 sm:px-6 lg:px-8">
           <h1 className="text-lg font-semibold leading-6 text-white">
             BlaBlaBeats
@@ -86,21 +86,16 @@ export default function Home() {
           </Link>
         </div>
       </header>
-      <div className="flex h-full flex-row">
-        <main
-          className="background-animate relative flex h-full w-3/5
-    flex-col
-    bg-gradient-to-r
-    from-pink-500
-    via-red-500
-    to-yellow-500"
-        >
+      <div className="flex h-[calc(100vh-4rem)] flex-row">
+        <main className="background-animate relative flex h-full w-3/5 flex-col bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
           <div className="absolute inset-0 bg-black bg-opacity-80" />
           <AudioListener />
         </main>
 
         <aside className="inset-y-0 right-0 w-2/5 overflow-y-auto border-l border-gray-700 px-4 py-6 sm:px-6 lg:px-8 xl:block">
-          <div className="pb-10 text-xl text-white lg:pb-6">Soundboard</div>
+          <div className="pb-10 text-xl font-medium text-white lg:pb-6">
+            Soundboard
+          </div>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             {sounds.map((beat: any) => (
               <div
