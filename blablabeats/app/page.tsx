@@ -2,9 +2,8 @@
 
 import { useCallback, useEffect } from 'react'
 import beatsList from '../data/audioList'
-import EditBeatForm from './components/EditBeatDialog'
-import AudioVisualizer from './components/AudioVisualizer'
 import AudioListener from './components/AudioListener'
+import EditBeatForm from './components/EditBeatDialog'
 
 // and we ref this from the storage, storage the source of truth
 
@@ -48,11 +47,11 @@ export default function Home() {
           Welcome to BlaBlaBeats
         </div>
         <AudioListener />
-        <AudioVisualizer />
       </main>
 
-      <aside className="fixed inset-y-0 right-0 hidden w-2/5 overflow-y-auto border-l border-gray-200 px-4 py-6 sm:px-6 lg:px-8 xl:block">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <aside className="fixed inset-y-0 right-0 w-2/5 overflow-y-auto border-l border-gray-200 px-4 py-6 sm:px-6 lg:px-8 xl:block">
+        <div className="pb-10 lg:pb-6">Soundboard</div>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {beatsList.map((beat) => (
             <div
               key={beat.name}
