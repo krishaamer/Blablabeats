@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://blablabeats.vercel.app">
-    <img alt="Real-time sound/music generation tailored to the rhythm of your conversations." src="/social.png">
+    <img alt="Real-time sound/music generation tailored to the rhythm of your conversations." src="https://blablabeats.vercel.app/social.png">
   </a>
 </p>
 
