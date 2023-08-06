@@ -1,5 +1,7 @@
 import '@/styles/tailwind.css'
 import { Toaster } from 'react-hot-toast'
+import { Public_Sans } from 'next/font/google'
+import { cn } from '../lib/utils'
 
 export const metadata = {
   title: {
@@ -9,21 +11,16 @@ export const metadata = {
   description: '',
 }
 
+const publicsans = Public_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: '300',
+})
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="h-full bg-gray-900 antialiased">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Public+Sans&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={cn(publicsans.className, 'h-full bg-gray-900')}>
+      <head></head>
       <body className="flex min-h-full">
         <div>
           <Toaster />
