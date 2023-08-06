@@ -107,10 +107,11 @@ export default function Home() {
             {sounds.map((beat: any) => (
               <div
                 key={beat.name}
-                className={
-                  (cn(audio === beat.source && 'animate-ping bg-green-500'),
-                  'relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600')
-                }
+                className={cn(
+                  'relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600',
+                  audio === beat.source &&
+                    'border-green-500 bg-green-800 hover:border-green-600'
+                )}
               >
                 <div className="min-w-0 flex-1">
                   <button
