@@ -215,8 +215,8 @@ const AudioListener = () => {
   }
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center">
-      <div className="flex w-full flex-col rounded-2xl bg-black p-8 text-gray-800 shadow-lg">
+    <div className="flex h-full flex-1 flex-col items-center justify-center">
+      <div className="flex h-full w-full flex-1 flex-col rounded-2xl bg-black p-8 text-gray-800 shadow-lg">
         <div className="text-white">{transcript}</div>
         <div className="mt-6 flex items-center justify-center">
           {!isRecording ? (

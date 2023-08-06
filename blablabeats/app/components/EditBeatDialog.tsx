@@ -106,32 +106,29 @@ const EditBeatForm = ({ beat, onUpdate }) => {
               <>
                 <DialogHeader>
                   <DialogTitle className="mb-2">
-                    Regenerate Soundboard
+                    Custom Audio Prompt
                   </DialogTitle>
-                  <DialogDescription>
-                    <FormField
-                      control={form.control}
-                      name="prompt"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Prompt</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              autoFocus={true}
-                              placeholder="A laugh in the voice of Steve Carell"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormDescription>
-                            Type in the new audio file you want to replace and
-                            click Generate.
-                          </FormDescription>
+                  <FormField
+                    control={form.control}
+                    name="prompt"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Textarea
+                            autoFocus={true}
+                            placeholder="e.g. A laugh in the voice of Steve Carell."
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          Type in the new audio file you want to replace and
+                          click Generate.
+                        </FormDescription>
 
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </DialogDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </DialogHeader>
 
                 <DialogFooter>

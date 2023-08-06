@@ -60,7 +60,7 @@ export default function Home() {
           {sounds.map((beat: any) => (
             <div
               key={beat.name}
-              className="relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-700"
+              className="relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600"
             >
               {/* <div className="flex-shrink-0">
                 <div className="rounded-full text-3xl">{beat.emoji}</div>
