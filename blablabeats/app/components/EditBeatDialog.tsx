@@ -55,10 +55,22 @@ const EditBeatForm = ({ beat, onUpdate }) => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values.prompt)
     const result = await generateMusicGen(values.prompt)
-    console.log(result)
-    console.log('Alec can you put this in an audio tag, thanks!!')
+    if (localStorage.getItem('sounds')) {
+      const data: any = localStorage.getItem('sounds')
+      const json = JSON.parse(data)
+      const newjson = json.map((item) => {
+        if (item.name === beat.name) {
+          return {
+            name: values.prompt,
+            source: result,
+          }
+        }
+        return item
+      })
+      localStorage.setItem('sounds', JSON.stringify(newjson))
+    }
+
     setIsOpen(false)
     toast.success('Successfully created new pad!')
     reset()

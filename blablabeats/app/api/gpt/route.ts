@@ -45,11 +45,12 @@ export async function POST(req: Request | NextRequest) {
       ],
     })
     // make sure the choice was one of the valid sounds, if not, make it None
-    const choice = JSON.parse(gptResponse.data.choices[0].message.function_call.arguments).sound_to_play
+    const choice = JSON.parse(
+      gptResponse.data.choices[0].message.function_call.arguments
+    ).sound_to_play
     if (!sounds.includes(choice)) {
       return NextResponse.json('None')
     }
-    console.log('gptResponse', choice)
     return NextResponse.json(choice)
   } catch (err) {
     console.error('ERROR IN CHATGPT PIPELINE', err)
