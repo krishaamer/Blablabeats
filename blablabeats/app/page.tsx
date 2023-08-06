@@ -9,11 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { PencilIcon } from 'lucide-react'
-import * as z from 'zod'
-import { Button } from '../components/ui/button'
-import beatsList from '../data/audioList'
-
 import {
   Form,
   FormControl,
@@ -23,9 +18,12 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { Textarea } from '@/components/ui/textarea'
+import { PencilIcon } from 'lucide-react'
+import * as z from 'zod'
+import { Button } from '../components/ui/button'
+import beatsList from '../data/audioList'
+import EditBeatForm from './component/EditBeatDialog'
 
 const formSchema = z.object({
   prompt: z.string().min(2, {
@@ -37,21 +35,6 @@ export default function Home() {
   const playSound = (audio) => {
     const audioFile = new Audio(audio)
     audioFile.play()
-  }
-
-  // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      prompt: '',
-    },
-  })
-
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
   }
 
   return (
@@ -68,6 +51,7 @@ export default function Home() {
             </div>
             <div className="min-w-0 flex-1">
               <button
+                type="button"
                 onClick={() => playSound(beat.source)}
                 className="focus:outline-none "
               >
@@ -75,54 +59,7 @@ export default function Home() {
                 <p className="text-sm font-medium text-gray-900">{beat.name}</p>
               </button>
             </div>
-            <div>
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="mt-4 space-y-2"
-                >
-                  <Dialog>
-                    <DialogTrigger>
-                      <button className="relative z-10 rounded-md bg-white px-2 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                        <PencilIcon className="h-4 w-4" />
-                      </button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Regenerate Soundboard</DialogTitle>
-                        <DialogDescription>
-                          <FormField
-                            control={form.control}
-                            name="prompt"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Prompt</FormLabel>
-                                <FormControl>
-                                  <Input
-                                    autoFocus={true}
-                                    placeholder="A laugh in the voice of Steve Carell"
-                                    {...field}
-                                  />
-                                </FormControl>
-                                <FormDescription>
-                                  Type in the new audio file you want to replace
-                                  and click Generate.
-                                </FormDescription>
-
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </DialogDescription>
-                      </DialogHeader>
-                      <DialogFooter>
-                        <Button type="submit">Generate</Button>
-                      </DialogFooter>
-                    </DialogContent>
-                  </Dialog>
-                </form>
-              </Form>
-            </div>
+            <EditBeatForm beat={beat} />
           </div>
         ))}
       </div>

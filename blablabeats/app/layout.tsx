@@ -1,4 +1,5 @@
 import '@/styles/tailwind.css'
+import { Toaster } from 'react-hot-toast'
 
 export const metadata = {
   title: {
@@ -23,6 +24,9 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="flex min-h-full">
+        <div>
+          <Toaster />
+        </div>
         <div className="w-full">{children}</div>
       </body>
     </html>
