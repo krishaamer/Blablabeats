@@ -4,10 +4,12 @@ import { useCallback, useEffect } from 'react'
 import beatsList from '../data/audioList'
 import AudioListener from './components/AudioListener'
 import EditBeatForm from './components/EditBeatDialog'
+import { useState } from 'react'
 
 // and we ref this from the storage, storage the source of truth
 
 export default function Home() {
+  const [sounds, setSounds] = useState([])
   const playSound = (audio) => {
     const audioFile = new Audio(audio)
     audioFile.play()
@@ -24,9 +26,9 @@ export default function Home() {
 
     if (localStorage.getItem('sounds')) {
       const data: any = localStorage.getItem('sounds')
-      console.log(JSON.parse(data))
+      setSounds(JSON.parse(data))
     }
-  }, [])
+  }, [sounds])
 
   // format an audio file name to a beat name
   // capitalize the first letter of each word and remove dashes
@@ -52,7 +54,7 @@ export default function Home() {
       <aside className="fixed inset-y-0 right-0 w-2/5 overflow-y-auto border-l border-gray-700 px-4 py-6 sm:px-6 lg:px-8 xl:block">
         <div className="pb-10 lg:pb-6">Soundboard</div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          {beatsList.map((beat) => (
+          {sounds.map((beat) => (
             <div
               key={beat.name}
               className="relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-3 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600"
