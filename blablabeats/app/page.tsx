@@ -101,7 +101,7 @@ export default function Home() {
         </div>
       </header>
       <div className="flex h-[calc(100vh-3.5rem)] flex-row">
-        <main className="background-animate relative flex h-full w-3/5 flex-col bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
+        <main className="background-animate relative flex h-full w-3/5 flex-col bg-gradient-to-r from-fuchsia-500 via-violet-600 to-pink-400">
           <div className="absolute inset-0 bg-black bg-opacity-80" />
           <AudioListener onAudioPlay={onAudioPlay} />
         </main>
