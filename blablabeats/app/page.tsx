@@ -90,13 +90,21 @@ export default function Home() {
           </Link>
         </div>
       </header>
-      <div className="relative flex h-full flex-row">
-        <main className="flex h-full w-3/5 flex-col">
+      <div className="flex h-full flex-row">
+        <main
+          className="background-animate relative flex h-full w-3/5
+    flex-col
+    bg-gradient-to-r
+    from-pink-500
+    via-red-500
+    to-yellow-500"
+        >
+          <div className="absolute inset-0 bg-black bg-opacity-80" />
           <AudioListener />
         </main>
 
         <aside className="inset-y-0 right-0 w-2/5 overflow-y-auto border-l border-gray-700 px-4 py-6 sm:px-6 lg:px-8 xl:block">
-          <div className="pb-10 lg:pb-6">Soundboard</div>
+          <div className="pb-10 text-xl text-white lg:pb-6">Soundboard</div>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             {sounds.map((beat: any) => (
               <div

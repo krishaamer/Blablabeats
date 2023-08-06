@@ -219,7 +219,13 @@ const AudioListener = () => {
 
   return (
     <div className="relative flex h-full flex-1 flex-col items-center justify-center">
-      <div className="flex w-full flex-col bg-black p-8 text-gray-800 shadow-lg">
+      <div className="flex w-full flex-1 flex-col items-center justify-center">
+        <div className="min-h-80 text-white">{transcript}</div>
+        <div className="max-w-md text-center">
+          BlaBlaBeats adds character to your conversations. Simply press "Start"
+          and start speaking. BlaBlaBeats will listen to your conversation and
+          add the necessary beats to it.
+        </div>
         <div className="mt-6 flex items-center justify-center">
           {!isRecording ? (
             <Button variant={'secondary'} onClick={startRecording}>
@@ -232,12 +238,9 @@ const AudioListener = () => {
           )}
         </div>
       </div>
-      <div className="flex w-full flex-1 items-center justify-center bg-black">
-        <div className="min-h-80 text-white">{transcript}</div>
-      </div>
       <div className="">
         <canvas
-          className="absolute bottom-0 left-0 right-0 z-10 bg-black"
+          className="absolute bottom-0 left-0 right-0 z-10"
           ref={canvasRef}
           style={{ width: '100%' }}
         ></canvas>
