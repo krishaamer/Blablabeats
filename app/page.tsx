@@ -88,7 +88,7 @@ export default function Home() {
     <div className="flex h-screen flex-col overflow-hidden bg-[#130726] text-white">
       <header className="h-[3.5rem] border-b border-b-gray-700 bg-gray-800 shadow-sm">
         <div className="item-center relative mx-auto flex h-full justify-between px-4 sm:px-6 lg:px-8">
-          <h1 className="borel flex h-full items-center pt-4 text-2xl font-semibold text-white">
+          <h1 className="borel flex h-full items-center pt-6 text-2xl font-semibold text-white">
             BlaBlaBeats
           </h1>
           <Link
