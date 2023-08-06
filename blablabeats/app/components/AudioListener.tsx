@@ -3,11 +3,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import type RecordRTCType from 'recordrtc'
 import { fetchOpenAIChatCompletion } from '@/lib/api'
+import AutoPlaySound from './AutoPlaySound'
 let recorder
 let recordedChunks = []
 let socket
 
 import { fetchAssemblyAIRealtimeToken } from '@/lib/api'
+import { set } from 'react-hook-form'
 
 let options = {
   audioBitsPerSecond: 128000,
@@ -16,6 +18,7 @@ let options = {
 
 const AudioListener = () => {
   const [transcript, setTranscript] = useState('')
+  const [audio, setAudio] = useState('')
   const canvasRef = useRef(null)
   const audioContextRef = useRef(new AudioContext())
   const analyserRef = useRef(audioContextRef.current.createAnalyser())
@@ -122,8 +125,14 @@ const AudioListener = () => {
       if (msg.split(' ').length > 2 && res.message_type === 'FinalTranscript') {
         const data: any = localStorage.getItem('sounds')
         const sounds = JSON.parse(data).map((sound) => sound.name)
-        const gptResponse = await fetchOpenAIChatCompletion(msg, sounds)
-        console.log('gptResponse: ' + JSON.stringify(gptResponse))
+        const soundToPlay = await fetchOpenAIChatCompletion(msg, sounds)
+        // we now need to get the url of the sound from our map
+        const soundUrl = JSON.parse(data).find(
+          (sound) => sound.name === soundToPlay
+        ).source
+        setAudio(soundUrl)
+        console.log('soundUrl: ' + soundUrl)
+        // console.log('gptResponse: ' + JSON.stringify(gptResponse))
       }
       console.log('recorded message: ' + msg)
       setTranscript(msg)
@@ -225,6 +234,8 @@ const AudioListener = () => {
         ref={canvasRef}
         style={{ width: '100%', height: '100%' }}
       ></canvas>
+      <AutoPlaySound 
+        soundUrl={audio}></AutoPlaySound>
     </div>
   )
 }
