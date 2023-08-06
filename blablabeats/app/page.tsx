@@ -75,10 +75,10 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="h-screen bg-gray-900 text-white">
-      <header className="bg-gray shadow-sm">
-        <div className="mx-auto px-4 py-4 sm:px-6 lg:px-8">
-          <h1 className="text-white-900 text-lg font-semibold leading-6">
+    <div className="flex h-screen flex-col bg-gray-900 text-white">
+      <header className="bg-gray-800 shadow-sm">
+        <div className="mx-auto flex justify-between px-4 py-4 sm:px-6 lg:px-8">
+          <h1 className="text-lg font-semibold leading-6 text-white">
             BlaBlaBeats
           </h1>
           <Link
