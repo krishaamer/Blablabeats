@@ -34,6 +34,7 @@
     "react-hook-form": "^7.45.4",
     "react-stately": "^3.17.0",
     "recordrtc": "^5.6.2",
+    "replicate": "^0.14.1",
     "rss-to-json": "^2.1.1",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.6",

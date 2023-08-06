@@ -77,6 +77,9 @@ dependencies:
   recordrtc:
     specifier: ^5.6.2
     version: 5.6.2
+  replicate:
+    specifier: ^0.14.1
+    version: 0.14.1
   rss-to-json:
     specifier: ^2.1.1
     version: 2.1.1
@@ -4445,6 +4448,11 @@ packages:
       call-bind: 1.0.2
       define-properties: 1.2.0
       functions-have-names: 1.2.3
+    dev: false
+
+  /replicate@0.14.1:
+    resolution: {integrity: sha512-3NpuNRbvXoEjY+n/ra24VfQyIRCdLub9GCrU51fFTrMaa6OjRvMC9jGDJSpGRXOLvID75mFgN577HEhA3XEFtg==}
+    engines: {git: '>=2.11.0', node: '>=16.6.0', npm: '>=7.19.0', yarn: '>=1.7.0'}
     dev: false
 
   /require-directory@2.1.1:
