@@ -13,14 +13,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full bg-gray-900 antialiased">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
-          href="https://cdn.fontshare.com"
+          href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
         <link
+          href="https://fonts.googleapis.com/css2?family=Public+Sans&display=swap"
           rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap"
         />
       </head>
       <body className="flex min-h-full">

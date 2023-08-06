@@ -219,8 +219,7 @@ const AudioListener = () => {
 
   return (
     <div className="relative flex h-full flex-1 flex-col items-center justify-center">
-      <div className="flex h-full w-full flex-1 flex-col rounded-2xl bg-black p-8 text-gray-800 shadow-lg">
-        <div className="min-h-40 text-white">{transcript}</div>
+      <div className="flex w-full flex-col bg-black p-8 text-gray-800 shadow-lg">
         <div className="mt-6 flex items-center justify-center">
           {!isRecording ? (
             <Button variant={'secondary'} onClick={startRecording}>
@@ -233,11 +232,16 @@ const AudioListener = () => {
           )}
         </div>
       </div>
-      <canvas
-        className="absolute bottom-0 left-0 right-0 z-10 bg-black"
-        ref={canvasRef}
-        style={{ width: '100%' }}
-      ></canvas>
+      <div className="flex w-full flex-1 items-center justify-center bg-black">
+        <div className="min-h-80 text-white">{transcript}</div>
+      </div>
+      <div className="">
+        <canvas
+          className="absolute bottom-0 left-0 right-0 z-10 bg-black"
+          ref={canvasRef}
+          style={{ width: '100%' }}
+        ></canvas>
+      </div>
       <AutoPlaySound soundUrl={audio}></AutoPlaySound>
     </div>
   )

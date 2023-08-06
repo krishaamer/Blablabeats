@@ -6,6 +6,8 @@ import AudioListener from './components/AudioListener'
 import EditBeatForm from './components/EditBeatDialog'
 import { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { ExternalLink, Link2OffIcon } from 'lucide-react'
+import Link from 'next/link'
 
 // and we ref this from the storage, storage the source of truth
 
@@ -54,16 +56,23 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="h-screen bg-gray-900 text-white">
-      <header className="bg-white shadow-sm">
-        <div className="mx-auto px-4 py-4 sm:px-6 lg:px-8">
-          <h1 className="text-lg font-semibold leading-6 text-gray-900">
+    <div className="flex h-screen flex-col bg-gray-900 text-white">
+      <header className="bg-gray-800 shadow-sm">
+        <div className="mx-auto flex justify-between px-4 py-4 sm:px-6 lg:px-8">
+          <h1 className="text-lg font-semibold leading-6 text-white">
             BlaBlaBeats
           </h1>
+          <Link
+            href="https://github.com/ytsheng/Blablabeats"
+            target="_blank"
+            className="flex flex-row items-center justify-center hover:underline"
+          >
+            Github <ExternalLink className="ml-2 h-4 w-4" />
+          </Link>
         </div>
       </header>
       <div className="relative flex h-full flex-row">
-        <main className="flex h-full w-3/5 flex-1 flex-col">
+        <main className="flex h-full w-3/5 flex-col">
           <AudioListener />
         </main>
 
@@ -75,9 +84,6 @@ export default function Home() {
                 key={beat.name}
                 className="relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600"
               >
-                {/* <div className="flex-shrink-0">
-                <div className="rounded-full text-3xl">{beat.emoji}</div>
-              </div> */}
                 <div className="min-w-0 flex-1">
                   <button
                     type="button"
