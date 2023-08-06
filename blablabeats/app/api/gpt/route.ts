@@ -16,7 +16,7 @@ export async function POST(req: Request | NextRequest) {
     // add 'None' to sounds
     sounds.push('None')
     const gptResponse = await openai.createChatCompletion({
-      model: 'gpt-4-0613',
+      model: 'gpt-3.5-turbo-0613',
       messages: [
         {
           role: 'user',
