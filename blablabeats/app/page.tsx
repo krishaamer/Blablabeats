@@ -1,10 +1,12 @@
 'use client'
 
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import beatsList from '../data/audioList'
 import EditBeatForm from './components/EditBeatDialog'
 import AudioVisualizer from './components/AudioVisualizer'
 import AudioListener from './components/AudioListener'
+
+// and we ref this from the storage, storage the source of truth
 
 export default function Home() {
   const playSound = (audio) => {
@@ -15,6 +17,17 @@ export default function Home() {
   const onUpdate = (values) => {
     console.log(values)
   }
+
+  useEffect(() => {
+    if (localStorage.getItem('sounds') === null) {
+      localStorage.setItem('sounds', JSON.stringify(beatsList))
+    }
+
+    if (localStorage.getItem('sounds')) {
+      const data: any = localStorage.getItem('sounds')
+      console.log(JSON.parse(data))
+    }
+  }, [])
 
   // format an audio file name to a beat name
   // capitalize the first letter of each word and remove dashes

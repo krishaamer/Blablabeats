@@ -19,8 +19,8 @@ export async function generateMusicGen(text: string) {
   return res.token as string
 }
 
-export async function fetchOpenAIChatCompletion(msg: string) {
-  const url = `${config.apiBaseUrl}/api/gpt`;
-  const res = await ky.post(url, { json: { msg } }).json<any>()
-  return res;
+export async function fetchOpenAIChatCompletion(msg: string, sounds: string[]) {
+  const url = `${config.apiBaseUrl}/api/gpt`
+  const res = await ky.post(url, { json: { msg, sounds } }).json<any>()
+  return res
 }

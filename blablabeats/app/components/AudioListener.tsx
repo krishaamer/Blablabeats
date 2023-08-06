@@ -54,8 +54,11 @@ const AudioListener = () => {
       // captions.innerText = msg;
       // only do this if we have actual words in msg
       if (msg.split(' ').length > 2 && res.message_type === 'FinalTranscript') {
-        const gptResponse = await fetchOpenAIChatCompletion(msg)
-        console.log('gptResponse: ' + JSON.stringify(gptResponse))
+        const data: any = localStorage.getItem('sounds')
+        const sounds = JSON.parse(data).map((sound) => sound.name)
+        console.log(sounds)
+        // const gptResponse = await fetchOpenAIChatCompletion(msg, sounds)
+        // console.log('gptResponse: ' + JSON.stringify(gptResponse))
       }
       console.log('recorded message: ' + msg)
       setTranscript(msg)
