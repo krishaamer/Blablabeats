@@ -16,7 +16,7 @@ export async function generateMusicGen(text: string) {
   // Use the ky.post method and the json shorthand to send the text
   const res = await ky.post(url, { json: { text }, timeout: 60000 }).json<any>()
 
-  return res.token as string
+  return res as string
 }
 
 export async function fetchOpenAIChatCompletion(msg: string, sounds: string[]) {

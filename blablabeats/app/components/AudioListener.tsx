@@ -9,6 +9,7 @@ let recordedChunks = []
 let socket
 
 import { fetchAssemblyAIRealtimeToken } from '@/lib/api'
+import { Button } from '../../components/ui/button'
 
 let options = {
   audioBitsPerSecond: 128000,
@@ -30,6 +31,7 @@ const AudioListener = () => {
   const [audio, setAudio] = useState('')
   const [isRecording, setIsRecording] = useState(false)
   const canvasRef = useRef(null)
+  const sourceRef: any = useRef(null)
   const audioContextRef: any = useRef(null)
   const streamRef: any = useRef(null)
   const analyserRef: any = useRef(null)
@@ -92,10 +94,10 @@ const AudioListener = () => {
     })
     streamRef.current = stream
 
-    const source = audioContextRef.current.createMediaStreamSource(
+    sourceRef.current = audioContextRef.current.createMediaStreamSource(
       streamRef.current
     )
-    source.connect(analyserRef.current)
+    sourceRef.current.connect(analyserRef.current)
 
     drawVisualization()
   }
@@ -227,7 +229,6 @@ const AudioListener = () => {
     setIsRecording(false)
     recorder?.stopRecording(stopRecordingCallback)
     console.log(recordedChunks)
-    canvasRef.current = null
     cancelAnimationFrame(animationFrameId)
   }
 
@@ -238,35 +239,39 @@ const AudioListener = () => {
     socket = null
 
     recorder.destroy()
+
+    sourceRef.current.disconnect()
     recorder = null
   }
 
   return (
-    <div className="flex h-full flex-1 flex-col items-center justify-center">
-      <div className="flex h-full w-full flex-1 flex-col rounded-2xl bg-black p-8 text-gray-800 shadow-lg">
-        <div className="text-white">{transcript}</div>
+    <div className="relative flex h-full flex-1 flex-col items-center justify-center">
+      <div className="flex w-full flex-1 flex-col items-center justify-center">
+        <div className="min-h-80 text-white">{transcript}</div>
+        <div className="max-w-md text-center">
+          BlaBlaBeats adds character to your conversations. Simply press "Start"
+          and start speaking. BlaBlaBeats will listen to your conversation and
+          add the necessary beats to it.
+        </div>
         <div className="mt-6 flex items-center justify-center">
           {!isRecording ? (
-            <button
-              onClick={startRecording}
-              className="m-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-            >
+            <Button variant={'secondary'} onClick={startRecording}>
               Start
-            </button>
+            </Button>
           ) : (
-            <button
-              onClick={stopRecording}
-              className="m-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-            >
+            <Button variant={'destructive'} onClick={stopRecording}>
               Stop
-            </button>
+            </Button>
           )}
         </div>
       </div>
-      <canvas
-        ref={canvasRef}
-        style={{ width: '100%', height: '100%' }}
-      ></canvas>
+      <div className="">
+        <canvas
+          className="absolute bottom-0 left-0 right-0 z-10"
+          ref={canvasRef}
+          style={{ width: '100%' }}
+        ></canvas>
+      </div>
       <AutoPlaySound soundUrl={audio}></AutoPlaySound>
     </div>
   )

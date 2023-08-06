@@ -56,20 +56,8 @@ const EditBeatForm = ({ beat, onUpdate }) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     const result = await generateMusicGen(values.prompt)
-    if (localStorage.getItem('sounds')) {
-      const data: any = localStorage.getItem('sounds')
-      const json = JSON.parse(data)
-      const newjson = json.map((item) => {
-        if (item.name === beat.name) {
-          return {
-            name: values.prompt,
-            source: result,
-          }
-        }
-        return item
-      })
-      localStorage.setItem('sounds', JSON.stringify(newjson))
-    }
+    console.log('music gen result', result)
+    onUpdate(values.prompt, beat, result)
 
     setIsOpen(false)
     toast.success('Successfully created new pad!')
@@ -96,7 +84,11 @@ const EditBeatForm = ({ beat, onUpdate }) => {
               <PencilIcon className="h-4 w-4 text-gray-400" />
             </div>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent
+            onPointerDownOutside={(e) =>
+              isSubmitting ? e.preventDefault() : null
+            }
+          >
             {isSubmitting ? (
               <div className="flex flex-col items-center justify-center">
                 <LoadingAnimation />
@@ -116,13 +108,13 @@ const EditBeatForm = ({ beat, onUpdate }) => {
                         <FormControl>
                           <Textarea
                             autoFocus={true}
-                            placeholder="e.g. A laugh in the voice of Steve Carell."
+                            placeholder="e.g. A beat with a bass drum and a snare"
                             {...field}
                           />
                         </FormControl>
                         <FormDescription>
-                          Type in the new audio file you want to replace and
-                          click Generate.
+                          Type in a prompt for the AI to generate the new audio
+                          file you want to replace and press Generate.
                         </FormDescription>
 
                         <FormMessage />

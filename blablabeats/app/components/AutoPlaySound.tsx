@@ -7,7 +7,7 @@ function AutoPlaySound({ soundUrl }) {
     audio.play()
   }, [soundUrl]) // Adding soundUrl to the dependency array
 
-  return <div />
+  return <></>
 }
 
 export default AutoPlaySound
