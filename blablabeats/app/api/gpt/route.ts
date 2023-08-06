@@ -8,14 +8,15 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 export async function POST(msg: string) {
+  
   try {
 
     const GetSoundDescriptions = () => {
-      return ['None', 'Laugh', 'Clap', 'Cheer', 'Awwww', 'Boo'];
+      return ["None", "Laugh", "Clap", "Cheer", "Awwww", "Boo"];
     };
 
     const gptResponse = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo-0613",
+      model: "gpt-3.5-turbo",
       messages: [
           {
               role: "user",
@@ -24,26 +25,26 @@ export async function POST(msg: string) {
       ],
       functions: [
         {
-            name: "choose_appropriate_sound",
-            description:
-              "Decides what sound (if any) to play based on the current conversation. Should be appropriate to the conversation. If no sound is appropriate, return None.",
-            parameters: {
-              type: "object",
-              properties: {
-                sound: {
-                  type: "string",
-                  enum: GetSoundDescriptions(),
-                },
+          name: "choose_appropriate_sound",
+          description:
+            "Decides what sound (if any) to play based on the current conversation. Should be appropriate to the conversation. If no sound is appropriate, return None.",
+          parameters: {
+            type: "object",
+            properties: {
+              sound: {
+                type: "string",
+                enum: GetSoundDescriptions(),
               },
             },
-            required: ["sound"],
-          }
-        ],
-      });
+          },
+          required: ["sound"],
+        }
+      ],
+    });
 
     return NextResponse.json(gptResponse);
   } catch (err) {
-    console.error("assembly ai token error", err);
+    console.error("ERROR IN CHATGPT PIPELINE", err);
     return NextResponse.json(err);
   }
 }
