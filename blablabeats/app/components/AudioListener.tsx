@@ -1,15 +1,14 @@
 'use client'
 
 import { fetchOpenAIChatCompletion } from '@/lib/api'
-import AutoPlaySound from './AutoPlaySound'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import type RecordRTCType from 'recordrtc'
+import AutoPlaySound from './AutoPlaySound'
 let recorder
 let recordedChunks = []
 let socket
 
 import { fetchAssemblyAIRealtimeToken } from '@/lib/api'
-import { set } from 'react-hook-form'
 
 let options = {
   audioBitsPerSecond: 128000,
@@ -159,14 +158,10 @@ const AudioListener = () => {
 
     socket.onopen = async () => {
       console.log('onopen')
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: false,
-      })
 
       const RecordRTC = (await import('recordrtc'))
         .default as typeof RecordRTCType
-      recorder = new RecordRTC(stream, {
+      recorder = new RecordRTC(streamRef.current, {
         type: 'audio',
         mimeType: 'audio/webm;codecs=pcm',
         recorderType: RecordRTC.StereoAudioRecorder,
@@ -191,7 +186,13 @@ const AudioListener = () => {
         },
       })
 
-      recorder.startRecording()
+      try {
+        recorder.startRecording()
+        alert('started')
+      } catch (e) {
+        console.log(e)
+        alert('failed')
+      }
     }
   }, [recorder])
 
@@ -244,8 +245,7 @@ const AudioListener = () => {
         ref={canvasRef}
         style={{ width: '100%', height: '100%' }}
       ></canvas>
-      <AutoPlaySound 
-        soundUrl={audio}></AutoPlaySound>
+      <AutoPlaySound soundUrl={audio}></AutoPlaySound>
     </div>
   )
 }

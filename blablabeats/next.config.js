@@ -7,7 +7,17 @@ const nextConfig = {
       headers: [
         {
           key: 'Cache-Control',
-          value: 'no-store',
+          value: 'no-store, max-age=0',
+        },
+      ],
+    },
+    {
+      // Create glob to target specific pages you want
+      source: '/api/token',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'no-store, max-age=0',
         },
       ],
     },
