@@ -39,6 +39,7 @@ export async function POST(req: Request | NextRequest) {
             properties: {
               sound_to_play: {
                 type: "string",
+                description: "one of the valid sounds to play",
                 enum: ["None","Laugh", "Clap", "Cheer", "Cry"]
               },
             },
