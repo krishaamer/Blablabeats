@@ -10,7 +10,6 @@ const about = () => {
       <a href="/" className="text-xl font-bold text-black">
         MAKE SOME MUSIC
       </a>
-      <AudioListener />
     </div>
   )
 }
