@@ -67,8 +67,18 @@ const EditBeatForm = ({ beat, onUpdate }) => {
 
   return (
     <Form {...form} key={beat.name}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
-        <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
+      <form
+        key={beat.name}
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-2"
+      >
+        <Dialog
+          open={isOpen}
+          onOpenChange={(open) => {
+            setIsOpen(open)
+            reset()
+          }}
+        >
           <DialogTrigger>
             <div className="relative z-10 rounded-md bg-gray-800 px-2 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-600 hover:bg-gray-900">
               <PencilIcon className="h-4 w-4 text-gray-400" />

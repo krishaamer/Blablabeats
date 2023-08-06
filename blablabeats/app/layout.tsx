@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="h-full bg-white antialiased">
+    <html lang="en" className="h-full bg-gray-900 antialiased">
       <head>
         <link
           rel="preconnect"
