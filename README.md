@@ -1,34 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+  <a href="https://pickle-pod.vercel.app">
+    <img alt="Real-time sound/music generation tailored to the rhythm of your conversations." src="/public/social.jpg">
+  </a>
+</p>
 
-## Getting Started
+<p align="center">
+  <a href="https://github.com/hackgoofer/Blablabeats/blob/main/license"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <a href="https://prettier.io"><img alt="Prettier Code Formatting" src="https://img.shields.io/badge/code_style-prettier-brightgreen.svg"></a>
+</p>
 
-First, run the development server:
+- [Intro](#intro)
+- [How it works](#how-it-works)
+- [Demo](#demo)
+- [Local development](#local-development)
+- [Contributions](#contributions)
+- [License](#license)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+## Intro
+
+[OutsideLLM](https://www.outsidellms.com/) hackathon project that audibly tunes into your daily chats and seamlessly cues music or sound effects to match the vibe of your conversation.
+
+## How it works
+
+- [Assembly AI](https://www.assemblyai.com) is used for real-time speech-to-text, so users can ask the podcast host questions using their voice.
+- [GPT](https://openai.com/) is used to decide what sound/music bytes to play based on conversational context.
+- [MusiGen](https://arxiv.org/abs/2306.05284) is used to generate additional sound/music bytes conditioned on text, GPT will then take into the generated music/sound into consideration when picking which sound bytes to play.
+
+## Demo
+
+[Demo](https://blablabeats.vercel.app)
+
+Note, we may keep this running for a while but we will shut it down if it becomes expensive for us. Sowwy. But you should be able to run it on your own with the instructions specified under "Build Locally" section.
+
+## Local development
+
+0. [Install `pnpm`](https://pnpm.io/installation)
+1. Run `pnpm i` to install dependencies
+2. `cp .env.example .env` and fill in all of the environment variables:
+
+```
+ASSEMBLY_AI_API_KEY=
+REPLICATE_API_TOKEN=
+OPENAI_API_KEY=
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Run `pnpm dev`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contributions
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+PRs are more than welcome. In particular, we need:
 
-## Learn More
+1. More default sounds
+2. Login / DB so that we can persist user's generated audio
+3. MusicGen has as sound model, integrate that
+4. With the inspiration of BumbleBee, we want to be able to have a sound retrieval conditioned on text that is from famous music/movie clips.
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+MIT © [Sasha Sheng](https://twitter.com/hackgoofer), [Miles Miller](https://twitter.com/milesvesh) and [Alec Dewitz](https://twitter.com/alecdewitz)
