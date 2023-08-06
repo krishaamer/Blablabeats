@@ -35,7 +35,7 @@ export async function POST(req: Request | NextRequest) {
               sound_to_play: {
                 type: 'string',
                 description: 'one of the valid sounds to play',
-                enum: sounds,
+                enum: sounds+['None'],
               },
             },
           },
