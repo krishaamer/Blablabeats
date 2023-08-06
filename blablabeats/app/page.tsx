@@ -85,10 +85,10 @@ export default function Home() {
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-gray-900 text-white">
+    <div className="flex h-screen flex-col overflow-hidden bg-[#130726] text-white">
       <header className="h-[3.5rem] border-b border-b-gray-700 bg-gray-800 shadow-sm">
-        <div className="mx-auto flex justify-between px-4 py-4 sm:px-6 lg:px-8">
-          <h1 className="text-lg font-semibold leading-6 text-white">
+        <div className="item-center relative mx-auto flex h-full justify-between px-4 sm:px-6 lg:px-8">
+          <h1 className="borel flex h-full items-center pt-4 text-2xl font-semibold text-white">
             BlaBlaBeats
           </h1>
           <Link
@@ -122,7 +122,7 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
             {sounds.map((beat: any) => (
               <div
                 key={beat.name}

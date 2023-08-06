@@ -20,7 +20,12 @@ const publicsans = Public_Sans({
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={cn(publicsans.className, 'h-full bg-gray-900')}>
-      <head></head>
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Borel&family=Public+Sans&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="flex min-h-full">
         <div>
           <Toaster />
