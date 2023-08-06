@@ -1,15 +1,14 @@
 'use client'
 
-import { useCallback, useEffect } from 'react'
+import { ExternalLink } from 'lucide-react'
+import Link from 'next/link'
+import { useCallback, useEffect, useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
+import { Button } from '../components/ui/button'
 import beatsList from '../data/audioList'
+import { cn } from '../lib/utils'
 import AudioListener from './components/AudioListener'
 import EditBeatForm from './components/EditBeatDialog'
-import { useState } from 'react'
-import { useHotkeys } from 'react-hotkeys-hook'
-import { ExternalLink, Link2OffIcon } from 'lucide-react'
-import Link from 'next/link'
-import { cn } from '../lib/utils'
-import { Button } from '../components/ui/button'
 
 // and we ref this from the storage, storage the source of truth
 
@@ -85,8 +84,8 @@ export default function Home() {
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-[#130726] text-white">
-      <header className="h-[3.5rem] border-b border-b-gray-700 bg-gray-800 shadow-sm">
+    <div className="background-animate flex h-screen flex-col overflow-hidden bg-slate-900 bg-gradient-to-r from-purple-600 via-blue-400 to-purple-600 text-white">
+      <header className="h-[3.5rem] border-b border-b-gray-700 bg-slate-900 bg-opacity-[85%] shadow-lg">
         <div className="item-center relative mx-auto flex h-full justify-between px-4 sm:px-6 lg:px-8">
           <h1 className="borel flex h-full items-center pt-6 text-2xl font-semibold text-white">
             BlaBlaBeats
@@ -101,12 +100,12 @@ export default function Home() {
         </div>
       </header>
       <div className="flex h-[calc(100vh-3.5rem)] flex-row">
-        <main className="background-animate relative flex h-full w-3/5 flex-col bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
+        <main className="relative flex h-full w-3/5 flex-col">
           <div className="absolute inset-0 bg-black bg-opacity-80" />
           <AudioListener onAudioPlay={onAudioPlay} />
         </main>
 
-        <aside className="inset-y-0 right-0 w-2/5 overflow-y-auto border-l border-gray-700 px-4 py-6 sm:px-6 lg:px-8 xl:block">
+        <aside className="inset-y-0 right-0 w-2/5 overflow-y-auto border-l border-gray-700 bg-slate-900 bg-opacity-[90%] px-4 py-6 sm:px-6 lg:px-8 xl:block">
           <div className="flex justify-between">
             <div className="pb-10 text-xl font-medium text-white lg:pb-6">
               Soundboard
@@ -127,7 +126,7 @@ export default function Home() {
               <div
                 key={beat.name}
                 className={cn(
-                  'group relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600',
+                  'group relative flex h-20 items-center space-x-3 rounded-lg border border-slate-500 bg-gray-900 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-blue-500 hover:bg-slate-800',
                   audio === beat.source &&
                     'border-green-500 bg-green-800 hover:border-green-600'
                 )}
@@ -139,7 +138,7 @@ export default function Home() {
                     className="focus:outline-none"
                   >
                     <span className="absolute inset-0" aria-hidden="true" />
-                    <p className="text-left text-sm font-medium text-white">
+                    <p className="line-clamp-3 text-left text-sm font-medium text-white">
                       {formatBeatName(beat.name)}
                     </p>
                   </button>

@@ -79,7 +79,7 @@ const AudioListener = ({ onAudioPlay }) => {
       let barHeight
       let x = 0
       for (let i = 0; i < dataArray.length; i++) {
-        barHeight = dataArray[i] / 1.2
+        barHeight = dataArray[i] / 1
 
         // Create gradient from hot pink to magenta
         const gradient = ctx.createLinearGradient(
@@ -93,7 +93,7 @@ const AudioListener = ({ onAudioPlay }) => {
 
         ctx.fillStyle = gradient
 
-        ctx.fillRect(x, canvas.height - barHeight / 1.2, barWidth, barHeight)
+        ctx.fillRect(x, canvas.height - barHeight / 1, barWidth, barHeight)
         x += barWidth + 1
       }
 
@@ -277,14 +277,19 @@ const AudioListener = ({ onAudioPlay }) => {
           </div>
         ) : (
           <div className="max-w-md text-center">
-            BlaBlaBeats adds character to your conversations. Simply press
-            {'"Start"'} and start speaking. BlaBlaBeats will listen to your
-            conversation and add the necessary beats to it.
+            BlaBlaBeats spices up your chats with perfectly-timed beats and
+            sounds. Just press {'"Start"'} and talk naturally — we'll mix in
+            audio that adds character to your conversations!
           </div>
         )}
         <div className="relative z-10 mt-6 flex items-center justify-center">
           {!isRecording ? (
-            <Button size={'lg'} variant={'secondary'} onClick={startRecording}>
+            <Button
+              size={'lg'}
+              className="bg-pink-500 text-white shadow-lg transition-all hover:bg-pink-600 active:translate-y-0.5 active:bg-pink-700 active:shadow-lg"
+              variant={'secondary'}
+              onClick={startRecording}
+            >
               <MicIcon className="mr-2 h-4 w-4" /> Start
             </Button>
           ) : (

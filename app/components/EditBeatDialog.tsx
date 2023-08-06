@@ -79,8 +79,8 @@ const EditBeatForm = ({ beat, onUpdate }) => {
             reset()
           }}
         >
-          <DialogTrigger className="opacity-0 group-hover:opacity-100">
-            <div className="relative z-10 rounded-md bg-gray-800 px-2 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-600 hover:bg-gray-900 group-hover:block">
+          <DialogTrigger className="absolute right-2 top-2 hidden group-hover:block">
+            <div className="relative z-10 rounded-md bg-gray-800 px-1.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-600 hover:bg-gray-900 group-hover:block">
               <PencilIcon className="h-4 w-4 text-gray-400" />
             </div>
           </DialogTrigger>
