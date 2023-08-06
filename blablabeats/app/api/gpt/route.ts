@@ -15,8 +15,10 @@ export async function POST(req: Request | NextRequest) {
     const { msg, sounds } = await req.json()
     // add 'None' to sounds
     sounds.push('None')
+    // randomize the order of sounds
+    sounds.sort(() => Math.random() - 0.5)
     const gptResponse = await openai.createChatCompletion({
-      model: 'gpt-4-0613',
+      model: 'gpt-3.5-turbo-0613',
       messages: [
         {
           role: 'user',
@@ -29,7 +31,7 @@ export async function POST(req: Request | NextRequest) {
         {
           name: 'choose_sound',
           description:
-            'Decides whether to play a sound (and which) based on the current conversation. If no sound is PERFECT, return None. Do not be annoying.',
+            'Decides whether to play a sound (and which) based on the current conversation. If no sound is absolutely PERFECT, return None. Do not be annoying.',
           parameters: {
             type: 'object',
             properties: {
