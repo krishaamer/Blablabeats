@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import {
+  Form,
   FormControl,
   FormDescription,
   FormField,
@@ -19,12 +20,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 
-const Form = dynamic(
-  () => import('@/components/ui/form').then((mod) => mod.Form),
-  { ssr: false }
-)
-
 import { Textarea } from '@/components/ui/textarea'
+import { generateMusicGen } from '@/lib/api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2, PencilIcon } from 'lucide-react'
 import { useState } from 'react'
@@ -32,8 +29,6 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
 import LoadingAnimation from '../../components/LoadingAnimation'
-import { generateMusicGen } from '@/lib/api'
-import dynamic from 'next/dynamic'
 
 const formSchema = z.object({
   prompt: z.string().min(4, {

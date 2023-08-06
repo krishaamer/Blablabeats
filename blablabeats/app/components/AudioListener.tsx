@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
-import type RecordRTCType from 'recordrtc'
 import { fetchOpenAIChatCompletion } from '@/lib/api'
+import { useEffect, useRef, useState } from 'react'
+import type RecordRTCType from 'recordrtc'
 let recorder
 let recordedChunks = []
 let socket
@@ -17,8 +17,8 @@ let options = {
 const AudioListener = () => {
   const [transcript, setTranscript] = useState('')
   const canvasRef = useRef(null)
-  const audioContextRef = useRef(new AudioContext())
-  const analyserRef = useRef(audioContextRef.current.createAnalyser())
+  const audioContextRef: any = useRef(null)
+  const analyserRef: any = useRef(null)
 
   const updateCanvasSize = () => {
     const canvas: any = canvasRef.current
@@ -29,6 +29,11 @@ const AudioListener = () => {
   }
 
   useEffect(() => {
+    window.AudioContext =
+      window.AudioContext || (window as any).webkitAudioContext
+    audioContextRef.current = new AudioContext()
+    analyserRef.current = audioContextRef.current.createAnalyser()
+
     let animationFrameId
     const start = async () => {
       const canvas: any = canvasRef.current
