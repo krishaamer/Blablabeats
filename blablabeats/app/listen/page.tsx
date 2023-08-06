@@ -129,7 +129,7 @@ const IndexPage = () => {
         <div className="flex items-center justify-center">
           <div className="p-3">
             <div className="text-xl font-medium text-gray-700">
-              Select a Podcaster
+              Start Speaking
             </div>
           </div>
         </div>
