@@ -9,6 +9,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { ExternalLink, Link2OffIcon } from 'lucide-react'
 import Link from 'next/link'
 import { cn } from '../lib/utils'
+import { Button } from '../components/ui/button'
 
 // and we ref this from the storage, storage the source of truth
 
@@ -77,6 +78,12 @@ export default function Home() {
     setAudio('')
   }
 
+  const resetToDefaults = () => {
+    const _sounds = JSON.stringify(beatsList)
+    sessionStorage.setItem('sounds', _sounds)
+    setSounds(JSON.parse(_sounds))
+  }
+
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-gray-900 text-white">
       <header className="h-[3.5rem] border-b border-b-gray-700 bg-gray-800 shadow-sm">
@@ -100,15 +107,27 @@ export default function Home() {
         </main>
 
         <aside className="inset-y-0 right-0 w-2/5 overflow-y-auto border-l border-gray-700 px-4 py-6 sm:px-6 lg:px-8 xl:block">
-          <div className="pb-10 text-xl font-medium text-white lg:pb-6">
-            Soundboard
+          <div className="flex justify-between">
+            <div className="pb-10 text-xl font-medium text-white lg:pb-6">
+              Soundboard
+            </div>
+            <div>
+              <Button
+                onClick={resetToDefaults}
+                variant={'ghost'}
+                size={'sm'}
+                className="text-red-500"
+              >
+                Reset
+              </Button>
+            </div>
           </div>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             {sounds.map((beat: any) => (
               <div
                 key={beat.name}
                 className={cn(
-                  'relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600',
+                  'group relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600',
                   audio === beat.source &&
                     'border-green-500 bg-green-800 hover:border-green-600'
                 )}
