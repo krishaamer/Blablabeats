@@ -17,6 +17,15 @@ let options = {
 }
 let animationFrameId
 
+// keep track of last time we played a sound so we don't spam too much
+let lastPlayed = Date.now()
+// also keep track of how often we are sending requests to openai
+let lastOpenAIRequest = Date.now()
+
+let lastThreeFinalTranscripts = ['']
+
+let lastTranscript = ''
+
 const AudioListener = () => {
   const [transcript, setTranscript] = useState('')
   const [audio, setAudio] = useState('')
@@ -130,22 +139,40 @@ const AudioListener = () => {
           msg += ` ${texts[key]}`
         }
       }
+
+      const combinedTranscript = lastThreeFinalTranscripts.join(' ') + msg
+
+      if(res.message_type === 'FinalTranscript' && msg != '' && msg != lastThreeFinalTranscripts[0]){
+        lastThreeFinalTranscripts.push(msg)
+        lastThreeFinalTranscripts.shift()
+      }
+
       // captions.innerText = msg;
       // only do this if we have actual words in msg
-      if (msg.split(' ').length > 2 && res.message_type === 'FinalTranscript') {
+      if (lastTranscript != combinedTranscript && Date.now() - lastOpenAIRequest > 1000) {
+        // if it's final, join this transcript with the last 3
+        lastTranscript = combinedTranscript
+        // combine the last 3 final transcripts + the current transcript
         const data: any = localStorage.getItem('sounds')
         const sounds = JSON.parse(data).map((sound) => sound.name)
-        const soundToPlay = await fetchOpenAIChatCompletion(msg, sounds)
+        const soundToPlay = await fetchOpenAIChatCompletion(combinedTranscript, sounds)
+        lastOpenAIRequest = Date.now()
         // we now need to get the url of the sound from our map
         const soundUrl = JSON.parse(data).find(
           (sound) => sound.name === soundToPlay
         )?.source
-        setAudio(soundUrl)
+        // only play the sound if it's been at least 5 seconds since the last one
+        if(soundToPlay != 'None'){
+          if(Date.now() - lastPlayed > 8000){
+            setAudio(soundUrl)
+            lastPlayed = Date.now()
+          }
+        }
         console.log('soundUrl: ' + soundUrl)
         // console.log('gptResponse: ' + JSON.stringify(gptResponse))
       }
-      console.log('recorded message: ' + msg)
-      setTranscript(msg)
+      console.log('recorded message: ' + combinedTranscript)
+      setTranscript(combinedTranscript)
     }
 
     socket.onerror = (event) => {
