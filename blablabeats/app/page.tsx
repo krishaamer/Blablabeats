@@ -54,42 +54,48 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="max-h-screen bg-gray-900 text-white">
-      <main className="flex h-screen max-h-screen w-3/5 flex-col">
-        <div className="px-4 py-10  sm:px-6 lg:px-8 lg:py-6">
-          Welcome to BlaBlaBeats
+    <div className="h-screen bg-gray-900 text-white">
+      <header className="bg-white shadow-sm">
+        <div className="mx-auto px-4 py-4 sm:px-6 lg:px-8">
+          <h1 className="text-lg font-semibold leading-6 text-gray-900">
+            BlaBlaBeats
+          </h1>
         </div>
-        <AudioListener />
-      </main>
+      </header>
+      <div className="relative flex h-full flex-row">
+        <main className="flex h-full w-3/5 flex-1 flex-col">
+          <AudioListener />
+        </main>
 
-      <aside className="fixed inset-y-0 right-0 w-2/5 overflow-y-auto border-l border-gray-700 px-4 py-6 sm:px-6 lg:px-8 xl:block">
-        <div className="pb-10 lg:pb-6">Soundboard</div>
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          {sounds.map((beat: any) => (
-            <div
-              key={beat.name}
-              className="relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600"
-            >
-              {/* <div className="flex-shrink-0">
+        <aside className="inset-y-0 right-0 w-2/5 overflow-y-auto border-l border-gray-700 px-4 py-6 sm:px-6 lg:px-8 xl:block">
+          <div className="pb-10 lg:pb-6">Soundboard</div>
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            {sounds.map((beat: any) => (
+              <div
+                key={beat.name}
+                className="relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600"
+              >
+                {/* <div className="flex-shrink-0">
                 <div className="rounded-full text-3xl">{beat.emoji}</div>
               </div> */}
-              <div className="min-w-0 flex-1">
-                <button
-                  type="button"
-                  onClick={() => playSound(beat.source)}
-                  className="focus:outline-none"
-                >
-                  <span className="absolute inset-0" aria-hidden="true" />
-                  <p className="text-left text-sm font-medium text-white">
-                    {formatBeatName(beat.name)}
-                  </p>
-                </button>
+                <div className="min-w-0 flex-1">
+                  <button
+                    type="button"
+                    onClick={() => playSound(beat.source)}
+                    className="focus:outline-none"
+                  >
+                    <span className="absolute inset-0" aria-hidden="true" />
+                    <p className="text-left text-sm font-medium text-white">
+                      {formatBeatName(beat.name)}
+                    </p>
+                  </button>
+                </div>
+                <EditBeatForm onUpdate={onUpdate} beat={beat} />
               </div>
-              <EditBeatForm onUpdate={onUpdate} beat={beat} />
-            </div>
-          ))}
-        </div>
-      </aside>
+            ))}
+          </div>
+        </aside>
+      </div>
     </div>
   )
 }

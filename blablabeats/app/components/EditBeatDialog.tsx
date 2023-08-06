@@ -96,7 +96,11 @@ const EditBeatForm = ({ beat, onUpdate }) => {
               <PencilIcon className="h-4 w-4 text-gray-400" />
             </div>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent
+            onPointerDownOutside={(e) =>
+              isSubmitting ? e.preventDefault() : null
+            }
+          >
             {isSubmitting ? (
               <div className="flex flex-col items-center justify-center">
                 <LoadingAnimation />
@@ -116,13 +120,13 @@ const EditBeatForm = ({ beat, onUpdate }) => {
                         <FormControl>
                           <Textarea
                             autoFocus={true}
-                            placeholder="e.g. A laugh in the voice of Steve Carell."
+                            placeholder="e.g. A beat with a bass drum and a snare"
                             {...field}
                           />
                         </FormControl>
                         <FormDescription>
-                          Type in the new audio file you want to replace and
-                          click Generate.
+                          Type in a prompt for the AI to generate the new audio
+                          file you want to replace and press Generate.
                         </FormDescription>
 
                         <FormMessage />
