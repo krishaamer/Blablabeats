@@ -71,8 +71,10 @@ export default function Home() {
     return formattedWords.join(' ')
   }, [])
 
-  const onAudioPlay = (audio) => {
+  const onAudioPlay = async (audio) => {
     setAudio(audio)
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    setAudio('')
   }
 
   return (
@@ -106,7 +108,7 @@ export default function Home() {
               <div
                 key={beat.name}
                 className={
-                  (cn(audio === beat.name && 'animate-ping bg-green-500'),
+                  (cn(audio === beat.source && 'animate-ping bg-green-500'),
                   'relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600')
                 }
               >
