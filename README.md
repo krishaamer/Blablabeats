@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://pickle-pod.vercel.app">
-    <img alt="Real-time sound/music generation tailored to the rhythm of your conversations." src="/public/social.jpg">
+  <a href="https://blablabeats.vercel.app">
+    <img alt="Real-time sound/music generation tailored to the rhythm of your conversations." src="/social.png">
   </a>
 </p>
 
