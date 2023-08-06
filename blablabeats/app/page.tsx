@@ -26,7 +26,10 @@ export default function Home() {
 
     if (localStorage.getItem('sounds')) {
       const data: any = localStorage.getItem('sounds')
-      setSounds(JSON.parse(data))
+      // deep compare the data
+      if (JSON.stringify(sounds) !== data) {
+        setSounds(JSON.parse(data))
+      }
     }
   }, [sounds])
 
@@ -54,14 +57,14 @@ export default function Home() {
       <aside className="fixed inset-y-0 right-0 w-2/5 overflow-y-auto border-l border-gray-700 px-4 py-6 sm:px-6 lg:px-8 xl:block">
         <div className="pb-10 lg:pb-6">Soundboard</div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          {sounds.map((beat) => (
+          {sounds.map((beat: any) => (
             <div
               key={beat.name}
-              className="relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-3 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600"
+              className="relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-700"
             >
-              <div className="flex-shrink-0">
+              {/* <div className="flex-shrink-0">
                 <div className="rounded-full text-3xl">{beat.emoji}</div>
-              </div>
+              </div> */}
               <div className="min-w-0 flex-1">
                 <button
                   type="button"
