@@ -27,7 +27,7 @@ let lastThreeFinalTranscripts = ['']
 
 let lastTranscript = ''
 
-const AudioListener = () => {
+const AudioListener = ({ onAudioPlay }) => {
   const [transcript, setTranscript] = useState('')
   const [audio, setAudio] = useState('')
   const [isRecording, setIsRecording] = useState(false)
@@ -41,7 +41,7 @@ const AudioListener = () => {
     const canvas: any = canvasRef.current
     if (canvas) {
       canvas.width = canvas.clientWidth
-      canvas.height = canvas.clientHeight
+      canvas.height = canvas.clientHeight + 50
     }
   }
 
@@ -72,17 +72,28 @@ const AudioListener = () => {
       analyserRef.current.getByteFrequencyData(dataArray)
 
       // Clear canvas
-      ctx.fillStyle = 'transparent'
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       // Draw frequency bars
       const barWidth = (canvas.width / dataArray.length) * 2.5
       let barHeight
       let x = 0
       for (let i = 0; i < dataArray.length; i++) {
-        barHeight = dataArray[i] / 2
-        ctx.fillStyle = `rgb(${barHeight + 200},50,50)`
-        ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight)
+        barHeight = dataArray[i] / 1.2
+
+        // Create gradient from hot pink to magenta
+        const gradient = ctx.createLinearGradient(
+          x,
+          canvas.height - barHeight,
+          x,
+          canvas.height
+        )
+        gradient.addColorStop(0, 'hotpink') // start color
+        gradient.addColorStop(1, 'magenta') // end color
+
+        ctx.fillStyle = gradient
+
+        ctx.fillRect(x, canvas.height - barHeight / 1.2, barWidth, barHeight)
         x += barWidth + 1
       }
 
@@ -176,6 +187,7 @@ const AudioListener = () => {
         if (soundToPlay != 'None') {
           if (Date.now() - lastPlayed > 8000) {
             setAudio(soundUrl)
+            onAudioPlay(soundUrl)
             lastPlayed = Date.now()
           }
         }
@@ -241,6 +253,7 @@ const AudioListener = () => {
     recorder?.stopRecording(stopRecordingCallback)
     console.log(recordedChunks)
     cancelAnimationFrame(animationFrameId)
+    updateCanvasSize()
   }
 
   // Stops recording and ends real-time session.

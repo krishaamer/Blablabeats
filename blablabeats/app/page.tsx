@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { ExternalLink, Link2OffIcon } from 'lucide-react'
 import Link from 'next/link'
+import { cn } from '../lib/utils'
 
 // and we ref this from the storage, storage the source of truth
 
@@ -70,9 +71,13 @@ export default function Home() {
     return formattedWords.join(' ')
   }, [])
 
+  const onAudioPlay = (audio) => {
+    setAudio(audio)
+  }
+
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-gray-900 text-white">
-      <header className="h-[4rem] border-b border-b-gray-700 bg-gray-800 shadow-sm">
+      <header className="h-[3.5rem] border-b border-b-gray-700 bg-gray-800 shadow-sm">
         <div className="mx-auto flex justify-between px-4 py-4 sm:px-6 lg:px-8">
           <h1 className="text-lg font-semibold leading-6 text-white">
             BlaBlaBeats
@@ -86,10 +91,10 @@ export default function Home() {
           </Link>
         </div>
       </header>
-      <div className="flex h-[calc(100vh-4rem)] flex-row">
+      <div className="flex h-[calc(100vh-3.5rem)] flex-row">
         <main className="background-animate relative flex h-full w-3/5 flex-col bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
           <div className="absolute inset-0 bg-black bg-opacity-80" />
-          <AudioListener />
+          <AudioListener onAudioPlay={onAudioPlay} />
         </main>
 
         <aside className="inset-y-0 right-0 w-2/5 overflow-y-auto border-l border-gray-700 px-4 py-6 sm:px-6 lg:px-8 xl:block">
@@ -100,7 +105,10 @@ export default function Home() {
             {sounds.map((beat: any) => (
               <div
                 key={beat.name}
-                className="relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600"
+                className={
+                  (cn(audio === beat.name && 'animate-ping bg-green-500'),
+                  'relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600')
+                }
               >
                 <div className="min-w-0 flex-1">
                   <button
