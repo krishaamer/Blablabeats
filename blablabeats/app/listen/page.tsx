@@ -54,13 +54,14 @@ const IndexPage = () => {
         }
       }
       // captions.innerText = msg;
+      // only do this if we have actual words in msg
+      if (msg.split(' ').length > 2 && res.message_type === "FinalTranscript") {
+        const gptResponse = await fetchOpenAIChatCompletion(msg);
+        console.log('gptResponse: ' + JSON.stringify(gptResponse));
+      }
       console.log("recorded message: " + msg);
       setTranscript(msg);
-      // only do this if we have actual words in msg
-      if (msg.split(' ').length > 6) {
-        const gptResponse = await fetchOpenAIChatCompletion(msg);
-        console.log(JSON.stringify(gptResponse));
-      }
+
     };
 
     socket.onerror = (event) => {
