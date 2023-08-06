@@ -1,10 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import type RecordRTCType from "recordrtc";
-
 import { fetchAssemblyAIRealtimeToken } from "@/lib/api";
 const podcasters = [{ value: "lex-fridman", label: "Lex Fridman" }];
-
+import {fetchOpenAIChatCompletion} from "@/lib/api";
 let recorder;
 let recordedChunks = [];
 let socket;
@@ -13,6 +12,7 @@ let options = {
   audioBitsPerSecond: 128000,
   mimeType: "audio/webm;codecs=pcm",
 };
+
 
 const IndexPage = () => {
   const [transcript, setTranscript] = useState("");
@@ -36,8 +36,9 @@ const IndexPage = () => {
     );
     const texts = {};
 
-    socket.onmessage = (message) => {
+    socket.onmessage = async (message) => {
       let msg = "";
+      console.log("message: " + message.data);
       const res = JSON.parse(message.data);
       console.log("res: " + JSON.stringify(res));
 
@@ -54,8 +55,9 @@ const IndexPage = () => {
       }
       // captions.innerText = msg;
       console.log("recorded message: " + msg);
-
       setTranscript(msg);
+      const gptResponse = await fetchOpenAIChatCompletion(msg);
+      console.log(gptResponse.data);
     };
 
     socket.onerror = (event) => {
