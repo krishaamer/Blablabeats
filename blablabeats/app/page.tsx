@@ -11,13 +11,27 @@ import { useHotkeys } from 'react-hotkeys-hook'
 
 export default function Home() {
   const [sounds, setSounds] = useState([])
+  const [audio, setAudio] = useState('')
+
   const playSound = (audio) => {
     const audioFile = new Audio(audio)
     audioFile.play()
   }
 
-  const onUpdate = (values) => {
-    console.log(values)
+  const onUpdate = (prompt, beat, result) => {
+    if (localStorage.getItem('sounds')) {
+      const data: any = localStorage.getItem('sounds')
+      const json = JSON.parse(data)
+
+      json.map((item) => {
+        if (item.name === beat.name) {
+          item.source = result
+        }
+        return item
+      })
+      localStorage.setItem('sounds', JSON.stringify(json))
+      setSounds(json)
+    }
   }
 
   useEffect(() => {
@@ -45,7 +59,12 @@ export default function Home() {
   // capitalize the first letter of each word and remove dashes
   // for example "bass-drum-1" becomes "Bass Drum 1"
   const formatBeatName = useCallback((audio) => {
-    const name = audio.split('/').pop().split('.')[0]
+    const splitted_audio = audio.split('/')
+    if (splitted_audio.length == 1) {
+      return audio
+    }
+
+    const name = splitted_audio.pop().split('.')[0]
     const words = name.split('-')
     const formattedWords = words.map(
       (word) => word.charAt(0).toUpperCase() + word.slice(1)
