@@ -1,8 +1,11 @@
-import ky from 'ky'
 import type { NextRequest } from 'next/server'
 import Replicate from 'replicate'
 
 import { NextResponse } from 'next/server'
+
+export const config = {
+  runtime: 'edge',
+}
 
 export async function POST(req: Request | NextRequest) {
   try {

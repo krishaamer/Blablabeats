@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import type RecordRTCType from 'recordrtc'
 
 import { fetchAssemblyAIRealtimeToken } from '@/lib/api'
-const podcasters = [{ value: 'lex-fridman', label: 'Lex Fridman' }]
 
 let recorder
 let recordedChunks = []

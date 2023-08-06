@@ -35,7 +35,7 @@ const formSchema = z.object({
   }),
 })
 
-const EditBeatForm = ({ beat }) => {
+const EditBeatForm = ({ beat, onUpdate }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   // 1. Define your form.
@@ -59,7 +59,7 @@ const EditBeatForm = ({ beat }) => {
     console.log(result)
     console.log('Alec can you put this in an audio tag, thanks!!')
     setIsOpen(false)
-    toast.success('Successfully updated!')
+    toast.success('Successfully created new pad!')
     reset()
     await new Promise((r) => setTimeout(r, 500))
   }
