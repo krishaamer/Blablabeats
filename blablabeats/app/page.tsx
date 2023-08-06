@@ -5,6 +5,7 @@ import beatsList from '../data/audioList'
 import AudioListener from './components/AudioListener'
 import EditBeatForm from './components/EditBeatDialog'
 import { useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 // and we ref this from the storage, storage the source of truth
 
@@ -32,6 +33,13 @@ export default function Home() {
       }
     }
   }, [sounds])
+
+  useHotkeys('ctrl+k, cmd+k', () => {
+    localStorage.clear()
+    if (localStorage.getItem('sounds') === null) {
+      localStorage.setItem('sounds', JSON.stringify(beatsList))
+    }
+  })
 
   // format an audio file name to a beat name
   // capitalize the first letter of each word and remove dashes
