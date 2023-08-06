@@ -41,21 +41,21 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="max-h-screen">
+    <div className="max-h-screen bg-gray-900 text-white">
       <main className="flex h-screen max-h-screen w-3/5 flex-col">
-        <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
+        <div className="px-4 py-10  sm:px-6 lg:px-8 lg:py-6">
           Welcome to BlaBlaBeats
         </div>
         <AudioListener />
       </main>
 
-      <aside className="fixed inset-y-0 right-0 w-2/5 overflow-y-auto border-l border-gray-200 px-4 py-6 sm:px-6 lg:px-8 xl:block">
+      <aside className="fixed inset-y-0 right-0 w-2/5 overflow-y-auto border-l border-gray-700 px-4 py-6 sm:px-6 lg:px-8 xl:block">
         <div className="pb-10 lg:pb-6">Soundboard</div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {beatsList.map((beat) => (
             <div
               key={beat.name}
-              className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-3 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
+              className="relative flex items-center space-x-3 rounded-lg border border-gray-700 bg-gray-800 px-3 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600"
             >
               <div className="flex-shrink-0">
                 <div className="rounded-full text-3xl">{beat.emoji}</div>
@@ -67,7 +67,7 @@ export default function Home() {
                   className="focus:outline-none"
                 >
                   <span className="absolute inset-0" aria-hidden="true" />
-                  <p className="text-left text-sm font-medium text-gray-900">
+                  <p className="text-left text-sm font-medium text-white">
                     {formatBeatName(beat.name)}
                   </p>
                 </button>
