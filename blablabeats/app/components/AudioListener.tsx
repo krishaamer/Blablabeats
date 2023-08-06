@@ -278,7 +278,7 @@ const AudioListener = ({ onAudioPlay }) => {
         ) : (
           <div className="max-w-md text-center">
             BlaBlaBeats adds character to your conversations. Simply press
-            "Start" and start speaking. BlaBlaBeats will listen to your
+            {'"Start"'} and start speaking. BlaBlaBeats will listen to your
             conversation and add the necessary beats to it.
           </div>
         )}
