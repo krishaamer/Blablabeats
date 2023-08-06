@@ -6,8 +6,7 @@ let recorder;
 let recordedChunks = [];
 let socket;
 
-import { fetchAssemblyAIRealtimeToken, generateMusicGen } from '@/lib/api'
-const podcasters = [{ value: 'lex-fridman', label: 'Lex Fridman' }]
+import { fetchAssemblyAIRealtimeToken } from '@/lib/api'
 
 let options = {
   audioBitsPerSecond: 128000,
@@ -135,7 +134,7 @@ const IndexPage = () => {
         <div className="flex items-center justify-center">
           <div className="p-3">
             <div className="text-xl font-medium text-gray-700">
-              Select a Podcaster
+              Start Speaking
             </div>
           </div>
         </div>
