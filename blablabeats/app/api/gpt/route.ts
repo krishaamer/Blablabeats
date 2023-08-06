@@ -46,7 +46,7 @@ export async function POST(req: Request | NextRequest) {
     })
     // make sure the choice was one of the valid sounds, if not, make it None
     const choice = JSON.parse(
-      gptResponse.data.choices[0].message.function_call.arguments
+      gptResponse.data.choices[0].message.function_call?.arguments
     ).sound_to_play
     if (!sounds.includes(choice)) {
       return NextResponse.json('None')

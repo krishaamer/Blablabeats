@@ -269,7 +269,7 @@ const AudioListener = () => {
             conversation and add the necessary beats to it.
           </div>
         )}
-        <div className="mt-6 flex items-center justify-center">
+        <div className="relative z-10 mt-6 flex items-center justify-center">
           {!isRecording ? (
             <Button size={'lg'} variant={'secondary'} onClick={startRecording}>
               Start Recording
@@ -283,7 +283,7 @@ const AudioListener = () => {
       </div>
       <div className="">
         <canvas
-          className="absolute bottom-0 left-0 right-0 z-10"
+          className="absolute bottom-0 left-0 right-0"
           ref={canvasRef}
           style={{ width: '100%' }}
         ></canvas>
