@@ -19,6 +19,7 @@ let animationFrameId
 const AudioListener = () => {
   const [transcript, setTranscript] = useState('')
   const [audio, setAudio] = useState('')
+  const [isRecording, setIsRecording] = useState(false)
   const canvasRef = useRef(null)
   const audioContextRef: any = useRef(null)
   const streamRef: any = useRef(null)
@@ -92,6 +93,7 @@ const AudioListener = () => {
 
   const startRecording = useCallback(async () => {
     console.log('start recording')
+    setIsRecording(true)
 
     start()
 
@@ -136,7 +138,7 @@ const AudioListener = () => {
         // we now need to get the url of the sound from our map
         const soundUrl = JSON.parse(data).find(
           (sound) => sound.name === soundToPlay
-        ).source
+        )?.source
         setAudio(soundUrl)
         console.log('soundUrl: ' + soundUrl)
         // console.log('gptResponse: ' + JSON.stringify(gptResponse))
@@ -188,20 +190,19 @@ const AudioListener = () => {
 
       try {
         recorder.startRecording()
-        alert('started')
       } catch (e) {
         console.log(e)
-        alert('failed')
+        setIsRecording(false)
       }
     }
   }, [recorder])
 
   const stopRecording = () => {
+    setIsRecording(false)
     recorder?.stopRecording(stopRecordingCallback)
     console.log(recordedChunks)
     canvasRef.current = null
     cancelAnimationFrame(animationFrameId)
-    removeCanvas()
   }
 
   // Stops recording and ends real-time session.
@@ -216,29 +217,24 @@ const AudioListener = () => {
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center">
-      <div className="flex w-full flex-col rounded-2xl bg-white p-8 text-gray-800 shadow-lg">
-        <div className="flex items-center justify-center">
-          <div className="p-3">
-            <div className="text-xl font-medium text-gray-700">
-              Start Speaking
-            </div>
-          </div>
-        </div>
-        <div>{transcript}</div>
+      <div className="flex w-full flex-col rounded-2xl bg-black p-8 text-gray-800 shadow-lg">
+        <div className="text-white">{transcript}</div>
         <div className="mt-6 flex items-center justify-center">
-          <button
-            onClick={startRecording}
-            className="m-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-          >
-            Start Recording
-          </button>
-
-          <button
-            onClick={stopRecording}
-            className="m-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-          >
-            Stop Recording
-          </button>
+          {!isRecording ? (
+            <button
+              onClick={startRecording}
+              className="m-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+            >
+              Start
+            </button>
+          ) : (
+            <button
+              onClick={stopRecording}
+              className="m-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+            >
+              Stop
+            </button>
+          )}
         </div>
       </div>
       <canvas
