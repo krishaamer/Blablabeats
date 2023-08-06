@@ -1,12 +1,12 @@
 'use client'
 import React, { useState } from 'react'
 import type RecordRTCType from 'recordrtc'
-
-import { fetchAssemblyAIRealtimeToken } from '@/lib/api'
-
+import { fetchOpenAIChatCompletion } from '@/lib/api'
 let recorder
 let recordedChunks = []
 let socket
+
+import { fetchAssemblyAIRealtimeToken } from '@/lib/api'
 
 let options = {
   audioBitsPerSecond: 128000,
@@ -35,7 +35,7 @@ const AudioListener = () => {
     )
     const texts = {}
 
-    socket.onmessage = (message) => {
+    socket.onmessage = async (message) => {
       let msg = ''
       const res = JSON.parse(message.data)
       console.log('res: ' + JSON.stringify(res))
@@ -52,8 +52,12 @@ const AudioListener = () => {
         }
       }
       // captions.innerText = msg;
+      // only do this if we have actual words in msg
+      if (msg.split(' ').length > 2 && res.message_type === 'FinalTranscript') {
+        const gptResponse = await fetchOpenAIChatCompletion(msg)
+        console.log('gptResponse: ' + JSON.stringify(gptResponse))
+      }
       console.log('recorded message: ' + msg)
-
       setTranscript(msg)
     }
 
