@@ -56,20 +56,8 @@ const EditBeatForm = ({ beat, onUpdate }) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     const result = await generateMusicGen(values.prompt)
-    if (localStorage.getItem('sounds')) {
-      const data: any = localStorage.getItem('sounds')
-      const json = JSON.parse(data)
-      const newjson = json.map((item) => {
-        if (item.name === beat.name) {
-          return {
-            name: values.prompt,
-            source: result,
-          }
-        }
-        return item
-      })
-      localStorage.setItem('sounds', JSON.stringify(newjson))
-    }
+    console.log('music gen result', result)
+    onUpdate(values.prompt, beat, result)
 
     setIsOpen(false)
     toast.success('Successfully created new pad!')
