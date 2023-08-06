@@ -5,7 +5,6 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    console.log('token...')
     const token = await ky
       .post('https://api.assemblyai.com/v2/realtime/token', {
         json: { expires_in: 3600 },
