@@ -2,7 +2,8 @@
 
 import { useCallback } from 'react'
 import beatsList from '../data/audioList'
-import EditBeatForm from './component/EditBeatDialog'
+import EditBeatForm from './components/EditBeatDialog'
+import AudioVisualizer from './components/AudioVisualizer'
 
 export default function Home() {
   const playSound = (audio) => {
@@ -27,21 +28,20 @@ export default function Home() {
   }, [])
 
   return (
-    <div>
-      <main className="">
-        <div className="w-2/3">
-          <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
-            Welcome to BlaBlaBeats
-          </div>
+    <div className="max-h-screen">
+      <main className="flex h-screen max-h-screen w-3/5 flex-col">
+        <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
+          Welcome to BlaBlaBeats
         </div>
+        <AudioVisualizer />
       </main>
 
-      <aside className="fixed inset-y-0 right-0 hidden w-1/3 overflow-y-auto border-l border-gray-200 px-4 py-6 sm:px-6 lg:px-8 xl:block">
+      <aside className="fixed inset-y-0 right-0 hidden w-2/5 overflow-y-auto border-l border-gray-200 px-4 py-6 sm:px-6 lg:px-8 xl:block">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {beatsList.map((beat) => (
             <div
               key={beat.name}
-              className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
+              className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-3 py-4 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
             >
               <div className="flex-shrink-0">
                 <div className="rounded-full text-3xl">{beat.emoji}</div>

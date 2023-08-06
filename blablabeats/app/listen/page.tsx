@@ -13,7 +13,7 @@ let options = {
   mimeType: 'audio/webm;codecs=pcm',
 }
 
-const IndexPage = () => {
+const AudioListener = () => {
   const [transcript, setTranscript] = useState('')
 
   const startRecording = async () => {
@@ -153,4 +153,4 @@ const IndexPage = () => {
   )
 }
 
-export default IndexPage
+export default AudioListener
