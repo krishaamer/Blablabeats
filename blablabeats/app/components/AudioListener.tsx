@@ -10,6 +10,7 @@ let socket
 
 import { fetchAssemblyAIRealtimeToken } from '@/lib/api'
 import { Button } from '../../components/ui/button'
+import { StopCircle, StopCircleIcon } from 'lucide-react'
 
 let options = {
   audioBitsPerSecond: 128000,
@@ -71,7 +72,7 @@ const AudioListener = () => {
       analyserRef.current.getByteFrequencyData(dataArray)
 
       // Clear canvas
-      ctx.fillStyle = 'black'
+      ctx.fillStyle = 'transparent'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       // Draw frequency bars
@@ -142,28 +143,38 @@ const AudioListener = () => {
 
       const combinedTranscript = lastThreeFinalTranscripts.join(' ') + msg
 
-      if(res.message_type === 'FinalTranscript' && msg != '' && msg != lastThreeFinalTranscripts[0]){
+      if (
+        res.message_type === 'FinalTranscript' &&
+        msg != '' &&
+        msg != lastThreeFinalTranscripts[0]
+      ) {
         lastThreeFinalTranscripts.push(msg)
         lastThreeFinalTranscripts.shift()
       }
 
       // captions.innerText = msg;
       // only do this if we have actual words in msg
-      if (lastTranscript != combinedTranscript && Date.now() - lastOpenAIRequest > 1000) {
+      if (
+        lastTranscript != combinedTranscript &&
+        Date.now() - lastOpenAIRequest > 1000
+      ) {
         // if it's final, join this transcript with the last 3
         lastTranscript = combinedTranscript
         // combine the last 3 final transcripts + the current transcript
         const data: any = localStorage.getItem('sounds')
         const sounds = JSON.parse(data).map((sound) => sound.name)
-        const soundToPlay = await fetchOpenAIChatCompletion(combinedTranscript, sounds)
+        const soundToPlay = await fetchOpenAIChatCompletion(
+          combinedTranscript,
+          sounds
+        )
         lastOpenAIRequest = Date.now()
         // we now need to get the url of the sound from our map
         const soundUrl = JSON.parse(data).find(
           (sound) => sound.name === soundToPlay
         )?.source
         // only play the sound if it's been at least 5 seconds since the last one
-        if(soundToPlay != 'None'){
-          if(Date.now() - lastPlayed > 8000){
+        if (soundToPlay != 'None') {
+          if (Date.now() - lastPlayed > 8000) {
             setAudio(soundUrl)
             lastPlayed = Date.now()
           }
@@ -248,7 +259,9 @@ const AudioListener = () => {
     <div className="relative flex h-full flex-1 flex-col items-center justify-center">
       <div className="flex w-full flex-1 flex-col items-center justify-center">
         {isRecording ? (
-          <div className="min-h-80 text-white">{transcript}</div>
+          <div className="max-w-md text-center text-3xl text-white">
+            {transcript}
+          </div>
         ) : (
           <div className="max-w-md text-center">
             BlaBlaBeats adds character to your conversations. Simply press
@@ -258,12 +271,12 @@ const AudioListener = () => {
         )}
         <div className="mt-6 flex items-center justify-center">
           {!isRecording ? (
-            <Button variant={'secondary'} onClick={startRecording}>
-              Start
+            <Button size={'lg'} variant={'secondary'} onClick={startRecording}>
+              Start Recording
             </Button>
           ) : (
-            <Button variant={'destructive'} onClick={stopRecording}>
-              Stop
+            <Button size={'lg'} variant={'destructive'} onClick={stopRecording}>
+              <StopCircle className="mr-2 h-4 w-4" /> Stop
             </Button>
           )}
         </div>

@@ -76,7 +76,7 @@ export default function Home() {
 
   return (
     <div className="flex h-screen flex-col bg-gray-900 text-white">
-      <header className="bg-gray-800 shadow-sm">
+      <header className="border-b border-b-gray-700 bg-gray-800 shadow-sm">
         <div className="mx-auto flex justify-between px-4 py-4 sm:px-6 lg:px-8">
           <h1 className="text-lg font-semibold leading-6 text-white">
             BlaBlaBeats
